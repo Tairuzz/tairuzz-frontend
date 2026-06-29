@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tairuzz Embedded Report</title>
+  <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.23.1/dist/powerbi.js"></script>
+  <style>
+    body { margin: 0; padding: 0; }
+    #reportContainer {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>TEST FILE LOADED</h1>
+
+  <div id="reportContainer"></div>
+
+ <script>
+  async function loadReport() {
+    try {
+      const response = await fetch("http://localhost:3000/api/embed-config");
+      const config = await response.json();
+
+      const embedConfig = {
+        type: "report",
+        id: config.reportId,
+        embedUrl: config.embedUrl,
+        accessToken: config.embedToken,
+        tokenType: window['powerbi-client'].models.TokenType.Embed,
+        settings: {
+          panes: {
+            filters: { visible: false },
+            pageNavigation: { visible: true }
+          }
+        }
+      };
+
+      const reportContainer = document.getElementById("reportContainer");
+
+      powerbi.embed(reportContainer, embedConfig);
+
+    } catch (err) {
+      console.error("Embed failed:", err);
+    }
+  }
+
+  loadReport();
+</script>
+</body>
+</html>
