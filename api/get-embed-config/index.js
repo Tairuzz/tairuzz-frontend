@@ -10,7 +10,7 @@ module.exports = async function (context, req) {
   const reportId = "c1dd388a-a664-43ff-ad25-6b0c6adabe81";
 
   try {
-    // 1. Authenticate with Azure AD
+    // 1. Authenticate
     const tokenResponse = await fetch(
       `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`,
       {
@@ -25,7 +25,14 @@ module.exports = async function (context, req) {
       }
     );
 
-    const { access_token } = await tokenResponse.json();
+    const tokenJson = await tokenResponse.json();
+    context.log("AUTH RESPONSE:", tokenJson);
+
+    if (!tokenJson.access_token) {
+      throw new Error("Authentication failed — no access token");
+    }
+
+    const access_token = tokenJson.access_token;
 
     // 2. Get report metadata
     const reportResponse = await fetch(
@@ -35,10 +42,15 @@ module.exports = async function (context, req) {
       }
     );
 
-    const report = await reportResponse.json();
+    const reportJson = await reportResponse.json();
+    context.log("REPORT RESPONSE:", reportJson);
 
-    const embedUrl = report.embedUrl;
-    const datasetId = report.datasetId;
+    if (!reportJson.embedUrl) {
+      throw new Error("Report metadata failed — no embedUrl");
+    }
+
+    const embedUrl = reportJson.embedUrl;
+    const datasetId = reportJson.datasetId;
 
     // 3. Generate embed token
     const tokenGenResponse = await fetch(
@@ -56,23 +68,27 @@ module.exports = async function (context, req) {
       }
     );
 
-    const tokenData = await tokenGenResponse.json();
+    const tokenGenJson = await tokenGenResponse.json();
+    context.log("TOKEN GEN RESPONSE:", tokenGenJson);
 
-    // 4. Respond to frontend
+    if (!tokenGenJson.token) {
+      throw new Error("Token generation failed — no token");
+    }
+
     context.res = {
       status: 200,
       body: {
         embedUrl,
         reportId,
         datasetId,
-        embedToken: tokenData.token
+        embedToken: tokenGenJson.token
       }
     };
   } catch (err) {
-    context.log("ERROR:", err);
+    context.log("FINAL ERROR:", err.message);
     context.res = {
       status: 500,
-      body: "Error generating embed config"
+      body: err.message
     };
   }
 };
