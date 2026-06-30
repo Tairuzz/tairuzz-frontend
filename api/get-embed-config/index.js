@@ -1,5 +1,5 @@
-export default async function (req, context) {
-  return {
+export default async function (context, req) {
+  context.res = {
     status: 200,
     body: JSON.stringify({ message: "Backend is working" })
   };
