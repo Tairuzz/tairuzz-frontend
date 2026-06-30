@@ -1,4 +1,4 @@
-export default async function (context, req) {
+module.exports = async function (context, req) {
   context.res = {
     status: 200,
     body: JSON.stringify({ message: "Backend is working" })
