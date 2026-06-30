@@ -9,13 +9,7 @@ async function loadReport() {
     id: config.reportId,
     embedUrl: config.embedUrl,
     accessToken: config.embedToken,
-    tokenType: models.TokenType.Embed,
-    settings: {
-      panes: {
-        filters: { visible: false },
-        pageNavigation: { visible: true }
-      }
-    }
+    tokenType: models.TokenType.Embed
   };
 
   const reportContainer = document.getElementById("reportContainer");
