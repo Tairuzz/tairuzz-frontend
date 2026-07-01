@@ -14,8 +14,17 @@
       <p style="margin:5px 0 0;">Your embedded football analytics dashboard</p>
     </div>
 
+    <!-- LOGIN BOX -->
+    <div id="loginBox" style="padding:20px;">
+      <h2>Login</h2>
+      <input id="email" type="text" placeholder="Email" /><br><br>
+      <input id="password" type="password" placeholder="Password" /><br><br>
+      <button id="loginBtn">Login</button>
+      <p id="loginError" style="color:red;"></p>
+    </div>
+
     <!-- Navigation Buttons -->
-    <div style="padding:10px; background:#fafafa; border-bottom:1px solid #eee;">
+    <div style="padding:10px; background:#fafafa; border-bottom:1px solid #eee; display:none;" id="navBar">
       <button id="prevPage">Previous Page</button>
       <button id="nextPage">Next Page</button>
 
@@ -27,7 +36,7 @@
 
     <!-- Loader -->
     <div id="loader"
-         style="height:100vh; display:flex; align-items:center; justify-content:center;
+         style="height:100vh; display:none; align-items:center; justify-content:center;
                 font-size:24px; font-weight:600;">
       Loading report…
     </div>
