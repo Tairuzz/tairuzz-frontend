@@ -1,7 +1,7 @@
 {
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
-    "node-fetch": "^2.6.7",
-    "qs": "^6.11.2"
+    "@azure/msal-node": "^1.17.0",
+    "node-fetch": "^3.3.2"
   }
 }
