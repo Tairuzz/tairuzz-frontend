@@ -1,24 +1,18 @@
-import jwt from "jsonwebtoken";
+function login() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-export default async function (req, res) {
-  const { email, password } = req.body;
+  // Hardcoded test credentials
+  const validEmail = "admin@tairuzz.com";
+  const validPassword = "password123";
 
-  // Simple hardcoded user for now
-  const validUser = {
-    email: "admin@tairuzz.com",
-    password: "password123"
-  };
+  if (email === validEmail && password === validPassword) {
+    // Hide login section
+    document.getElementById("loginSection").style.display = "none";
 
-  if (email !== validUser.email || password !== validUser.password) {
-    return res.status(401).json({ error: "Invalid credentials" });
+    // Show main content
+    document.getElementById("mainContent").style.display = "block";
+  } else {
+    alert("Invalid credentials");
   }
-
-  // Create JWT
-  const token = jwt.sign(
-    { email },
-    process.env.JWT_SECRET,
-    { expiresIn: "2h" }
-  );
-
-  return res.json({ token });
 }
