@@ -11,26 +11,27 @@ module.exports = async function (context, req) {
 
   try {
     // 1. Authenticate
-    const tokenResponse = await fetch(
-      `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: qs.stringify({
-          grant_type: "client_credentials",
-          client_id: clientId,
-          client_secret: clientSecret,
-          scope: "https://analysis.windows.net/powerbi/api/.default"
-        })
-      }
-    );
+   const tokenResponse = await fetch(
+  `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`,
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: qs.stringify({
+      grant_type: "client_credentials",
+      client_id: clientId,
+      client_secret: clientSecret,
+      scope: "https://analysis.windows.net/powerbi/api/.default"
+    })
+  }
+);
 
-    const tokenJson = await tokenResponse.json();
-    context.log("AUTH RESPONSE:", tokenJson);
+context.log("TOKEN STATUS:", tokenResponse.status);
+const tokenJson = await tokenResponse.json();
+context.log("TOKEN JSON:", tokenJson);
 
-    if (!tokenJson.access_token) {
-      throw new Error("Authentication failed — no access token");
-    }
+if (!tokenJson.access_token) {
+  throw new Error(`Authentication failed — ${tokenJson.error}: ${tokenJson.error_description}`);
+}
 
     const access_token = tokenJson.access_token;
 
