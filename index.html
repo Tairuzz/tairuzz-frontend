@@ -4,9 +4,40 @@
     <title>Tairuzz Analytics</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #mainContent {
+        flex: 1;
+        display: none; /* hidden until login */
+        flex-direction: column;
+      }
+
+      #reportContainer {
+        flex: 1;
+        width: 100%;
+        display: none; /* hidden until report loads */
+      }
+
+      #loader {
+        flex: 1;
+        display: none; /* hidden until report loads */
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 600;
+      }
+    </style>
   </head>
 
-  <body style="margin:0; font-family:Arial, sans-serif;">
+  <body>
 
     <!-- Header -->
     <div style="padding:20px; background:#f5f5f5; border-bottom:1px solid #ddd;">
@@ -23,26 +54,26 @@
       <p id="loginError" style="color:red;"></p>
     </div>
 
-    <!-- Navigation Buttons -->
-    <div style="padding:10px; background:#fafafa; border-bottom:1px solid #eee; display:none;" id="navBar">
-      <button id="prevPage">Previous Page</button>
-      <button id="nextPage">Next Page</button>
+    <!-- MAIN CONTENT (hidden until login) -->
+    <div id="mainContent">
 
-      <!-- Full Screen Button -->
-      <button id="fullscreenBtn" style="float:right;">
-        Full Screen
-      </button>
+      <!-- Navigation Buttons -->
+      <div id="navBar" style="padding:10px; background:#fafafa; border-bottom:1px solid #eee; display:none;">
+        <button id="prevPage">Previous Page</button>
+        <button id="nextPage">Next Page</button>
+
+        <button id="fullscreenBtn" style="float:right;">
+          Full Screen
+        </button>
+      </div>
+
+      <!-- Loader -->
+      <div id="loader">Loading report…</div>
+
+      <!-- Report Container -->
+      <div id="reportContainer"></div>
+
     </div>
-
-    <!-- Loader -->
-    <div id="loader"
-         style="height:100vh; display:none; align-items:center; justify-content:center;
-                font-size:24px; font-weight:600;">
-      Loading report…
-    </div>
-
-    <!-- Report Container -->
-    <div id="reportContainer" style="height:100vh; width:100%; display:none;"></div>
 
     <!-- Power BI Client Library -->
     <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.19.0/dist/powerbi.js"></script>
