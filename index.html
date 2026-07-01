@@ -16,7 +16,7 @@
 
       #mainContent {
         flex: 1;
-        display: none; /* hidden until login */
+        display: flex;
         flex-direction: column;
       }
 
@@ -28,22 +28,16 @@
 
       #loader {
         flex: 1;
-        display: none; /* hidden until report loads */
+        display: flex;
         align-items: center;
         justify-content: center;
         font-size: 24px;
         font-weight: 600;
       }
 
-      #loginSection input {
-        width: 250px;
-        padding: 10px;
-        font-size: 14px;
-      }
-
-      #loginSection button {
-        padding: 10px 20px;
-        font-size: 14px;
+      #navBar button {
+        padding: 8px 14px;
+        margin-right: 10px;
         cursor: pointer;
       }
     </style>
@@ -57,23 +51,11 @@
       <p style="margin:5px 0 0;">Your embedded football analytics dashboard</p>
     </div>
 
-    <!-- LOGIN SECTION -->
-    <div id="loginSection" style="padding:20px;">
-      <h2>Login</h2>
-
-      <input id="email" type="text" placeholder="Email" /><br><br>
-      <input id="password" type="password" placeholder="Password" /><br><br>
-
-      <button onclick="login()">Login</button>
-
-      <p id="loginError" style="color:red;"></p>
-    </div>
-
-    <!-- MAIN CONTENT (hidden until login) -->
+    <!-- MAIN CONTENT -->
     <div id="mainContent">
 
       <!-- Navigation Buttons -->
-      <div id="navBar" style="padding:10px; background:#fafafa; border-bottom:1px solid #eee; display:none;">
+      <div id="navBar" style="padding:10px; background:#fafafa; border-bottom:1px solid #eee;">
         <button id="prevPage">Previous Page</button>
         <button id="nextPage">Next Page</button>
 
@@ -93,26 +75,8 @@
     <!-- Power BI Client Library -->
     <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.19.0/dist/powerbi.js"></script>
 
-    <!-- Hardcoded Login Logic -->
-    <script>
-      function login() {
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value.trim();
-
-        const validEmail = "admin@tairuzz.com";
-        const validPassword = "password123";
-
-        if (email === validEmail && password === validPassword) {
-          document.getElementById("loginSection").style.display = "none";
-          document.getElementById("mainContent").style.display = "flex";
-        } else {
-          document.getElementById("loginError").innerText = "Invalid credentials";
-        }
-      }
-    </script>
-
     <!-- Your embed logic -->
-    <script src="index.js" type="module"></script>
+    <script type="module" src="index.js"></script>
 
   </body>
 </html>
