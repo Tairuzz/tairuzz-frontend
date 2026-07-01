@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Tairuzz Analytics</title>
-    <p>DEPLOY TEST</p>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -35,6 +34,18 @@
         font-size: 24px;
         font-weight: 600;
       }
+
+      #loginSection input {
+        width: 250px;
+        padding: 10px;
+        font-size: 14px;
+      }
+
+      #loginSection button {
+        padding: 10px 20px;
+        font-size: 14px;
+        cursor: pointer;
+      }
     </style>
   </head>
 
@@ -46,12 +57,15 @@
       <p style="margin:5px 0 0;">Your embedded football analytics dashboard</p>
     </div>
 
-    <!-- LOGIN BOX -->
-    <div id="loginBox" style="padding:20px;">
+    <!-- LOGIN SECTION -->
+    <div id="loginSection" style="padding:20px;">
       <h2>Login</h2>
+
       <input id="email" type="text" placeholder="Email" /><br><br>
       <input id="password" type="password" placeholder="Password" /><br><br>
-      <button id="loginBtn">Login</button>
+
+      <button onclick="login()">Login</button>
+
       <p id="loginError" style="color:red;"></p>
     </div>
 
@@ -78,6 +92,24 @@
 
     <!-- Power BI Client Library -->
     <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.19.0/dist/powerbi.js"></script>
+
+    <!-- Hardcoded Login Logic -->
+    <script>
+      function login() {
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        const validEmail = "admin@tairuzz.com";
+        const validPassword = "password123";
+
+        if (email === validEmail && password === validPassword) {
+          document.getElementById("loginSection").style.display = "none";
+          document.getElementById("mainContent").style.display = "flex";
+        } else {
+          document.getElementById("loginError").innerText = "Invalid credentials";
+        }
+      }
+    </script>
 
     <!-- Your embed logic -->
     <script src="index.js" type="module"></script>
