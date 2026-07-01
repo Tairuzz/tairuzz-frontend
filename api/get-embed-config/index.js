@@ -3,7 +3,7 @@ const qs = require("qs");
 
 module.exports = async function (context, req) {
   const tenantId = "41f63eb4-f8aa-485a-86d6-c3762e4e8db5";
-  const clientId = "cb099af1-7789-4110-8797-937c8b0fb9e5";
+  const clientId = "9d46264f-6a64-469c-b368-d1458c64f9e0";
   const clientSecret = process.env.AZURE_APP_SECRET;
 
   const workspaceId = "3155d8d0-9725-40c1-b9f4-0ebdd5e9706c";
