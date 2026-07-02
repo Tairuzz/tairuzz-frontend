@@ -1,7 +1,9 @@
+
 <!DOCTYPE html>
 <html>
   <head>
     <title>Tairuzz Analytics</title>
+    <p>DEPLOY TEST</p>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -16,7 +18,7 @@
 
       #mainContent {
         flex: 1;
-        display: flex;
+        display: none; /* hidden until login */
         flex-direction: column;
       }
 
@@ -28,17 +30,11 @@
 
       #loader {
         flex: 1;
-        display: flex;
+        display: none; /* hidden until report loads */
         align-items: center;
         justify-content: center;
         font-size: 24px;
         font-weight: 600;
-      }
-
-      #navBar button {
-        padding: 8px 14px;
-        margin-right: 10px;
-        cursor: pointer;
       }
     </style>
   </head>
@@ -51,11 +47,20 @@
       <p style="margin:5px 0 0;">Your embedded football analytics dashboard</p>
     </div>
 
-    <!-- MAIN CONTENT -->
+    <!-- LOGIN BOX -->
+    <div id="loginBox" style="padding:20px;">
+      <h2>Login</h2>
+      <input id="email" type="text" placeholder="Email" /><br><br>
+      <input id="password" type="password" placeholder="Password" /><br><br>
+      <button id="loginBtn">Login</button>
+      <p id="loginError" style="color:red;"></p>
+    </div>
+
+    <!-- MAIN CONTENT (hidden until login) -->
     <div id="mainContent">
 
       <!-- Navigation Buttons -->
-      <div id="navBar" style="padding:10px; background:#fafafa; border-bottom:1px solid #eee;">
+      <div id="navBar" style="padding:10px; background:#fafafa; border-bottom:1px solid #eee; display:none;">
         <button id="prevPage">Previous Page</button>
         <button id="nextPage">Next Page</button>
 
@@ -76,7 +81,7 @@
     <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.19.0/dist/powerbi.js"></script>
 
     <!-- Your embed logic -->
-    <script type="module" src="index.js"></script>
+    <script src="index.js" type="module"></script>
 
   </body>
 </html>
