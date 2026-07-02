@@ -1,49 +1,116 @@
-import fetch from "node-fetch";
-import { ConfidentialClientApplication } from "@azure/msal-node";
 
-export default async function (req, res) {
-  try {
-    const msalConfig = {
-      auth: {
-        clientId: process.env.PBI_CLIENT_ID,
-        authority: `https://login.microsoftonline.com/${process.env.PBI_TENANT_ID}`,
-        clientSecret: process.env.PBI_CLIENT_SECRET
-      }
-    };
+import * as powerbi from "powerbi-client";
 
-    const cca = new ConfidentialClientApplication(msalConfig);
+async function login() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-    const authResult = await cca.acquireTokenByClientCredential({
-      scopes: ["https://analysis.windows.net/powerbi/api/.default"]
-    });
+  const response = await fetch("/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  });
 
-    const accessToken = authResult.accessToken;
+  const data = await response.json();
 
-    const workspaceId = process.env.PBI_WORKSPACE_ID;
-    const reportId = process.env.PBI_REPORT_ID;
-
-    const embedReq = await fetch(
-      `https://api.powerbi.com/v1.0/myorg/groups/${workspaceId}/reports/${reportId}/GenerateToken`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ accessLevel: "View" })
-      }
-    );
-
-    const embedData = await embedReq.json();
-
-    return res.status(200).json({
-      embedUrl: `https://app.powerbi.com/reportEmbed?reportId=${reportId}&groupId=${workspaceId}`,
-      reportId,
-      embedToken: embedData.token
-    });
-
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "Failed to generate embed token" });
+  if (response.status !== 200) {
+    document.getElementById("loginError").innerText = data.error;
+    return;
   }
+
+  // Save JWT
+  localStorage.setItem("token", data.token);
+
+  // Hide login box
+  document.getElementById("loginBox").style.display = "none";
+
+  // Load report
+  loadReport();
+}
+
+document.getElementById("loginBtn").onclick = login;
+
+
+async function loadReport() {
+  // Show loader while fetching
+  const loader = document.getElementById("loader");
+  const reportContainer = document.getElementById("reportContainer");
+
+  // 1. Call your backend
+  const response = await fetch("/api/get-embed-config", {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token")
+    }
+  });
+
+  const config = await response.json();
+
+  const embedUrl = config.embedUrl;
+  const reportId = config.reportId;
+  const embedToken = config.embedToken;
+
+  // 2. Prepare Power BI embed config
+  const models = powerbi.models;
+
+  const embedConfig = {
+    type: "report",
+    id: reportId,
+    embedUrl: embedUrl,
+    accessToken: embedToken,
+    tokenType: models.TokenType.Embed,
+    settings: {
+      panes: {
+        filters: { visible: false },
+        pageNavigation: { visible: true }
+      }
+    }
+  };
+
+  // 3. Embed into your container
+  const report = powerbi.embed(reportContainer, embedConfig);
+
+  // Hide loader, show report
+  loader.style.display = "none";
+  reportContainer.style.display = "block";
+
+  // -----------------------------
+  // PAGE NAVIGATION BUTTONS
+  // -----------------------------
+  document.getElementById("nextPage").onclick = async () => {
+    const pages = await report.getPages();
+    const active = pages.find(p => p.isActive);
+    const index = pages.indexOf(active);
+
+    if (index < pages.length - 1) {
+      pages[index + 1].setActive();
+    }
+  };
+
+  document.getElementById("prevPage").onclick = async () => {
+    const pages = await report.getPages();
+    const active = pages.find(p => p.isActive);
+    const index = pages.indexOf(active);
+
+    if (index > 0) {
+      pages[index - 1].setActive();
+    }
+  };
+
+  // -----------------------------
+  // FULL SCREEN BUTTON
+  // -----------------------------
+  document.getElementById("fullscreenBtn").onclick = () => {
+    if (reportContainer.requestFullscreen) {
+      reportContainer.requestFullscreen();
+    }
+  };
+}
+
+
+// --------------------------------------
+// AUTO‑LOGIN CHECK
+// --------------------------------------
+if (localStorage.getItem("token")) {
+  document.getElementById("loginBox").style.display = "none";
+  loadReport();
 }
