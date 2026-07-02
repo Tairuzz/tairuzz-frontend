@@ -12,7 +12,7 @@ async function loadReport() {
   reportContainer.style.display = "block";
 
   // 🔥 CALL YOUR BACKEND TO GET FRESH TOKEN
-  const response = await fetch("/api/get-embed-token");
+  const response = await fetch("/api/get-embed-config");
   const config = await response.json();
 
   const models = powerbi.models;
