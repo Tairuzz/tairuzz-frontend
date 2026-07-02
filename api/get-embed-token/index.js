@@ -3,9 +3,6 @@ import { ConfidentialClientApplication } from "@azure/msal-node";
 
 export default async function (req, res) {
   try {
-    // -----------------------------
-    // 1. AUTHENTICATE USING SERVICE PRINCIPAL
-    // -----------------------------
     const msalConfig = {
       auth: {
         clientId: process.env.PBI_CLIENT_ID,
@@ -22,9 +19,6 @@ export default async function (req, res) {
 
     const accessToken = authResult.accessToken;
 
-    // -----------------------------
-    // 2. CALL POWER BI TO GENERATE EMBED TOKEN
-    // -----------------------------
     const workspaceId = process.env.PBI_WORKSPACE_ID;
     const reportId = process.env.PBI_REPORT_ID;
 
@@ -36,17 +30,12 @@ export default async function (req, res) {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          accessLevel: "View"
-        })
+        body: JSON.stringify({ accessLevel: "View" })
       }
     );
 
     const embedData = await embedReq.json();
 
-    // -----------------------------
-    // 3. RETURN EMBED CONFIG TO FRONTEND
-    // -----------------------------
     return res.status(200).json({
       embedUrl: `https://app.powerbi.com/reportEmbed?reportId=${reportId}&groupId=${workspaceId}`,
       reportId,
