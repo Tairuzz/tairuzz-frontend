@@ -1,58 +1,44 @@
-import * as powerbi from "powerbi-client";
+const { PowerBiClient } = require("powerbi-api");
+const msal = require("@azure/msal-node");
 
-window.onload = () => {
-  loadReport();
-};
-
-async function loadReport() {
-  const loader = document.getElementById("loader");
-  const reportContainer = document.getElementById("reportContainer");
-
-  loader.style.display = "flex";
-  reportContainer.style.display = "block";
-
-const response = await fetch("/api/get-embed-config");
-const config = await response.json();
-
-const embedUrl = config.embedUrl;
-const reportId = config.reportId;
-const embedToken = config.embedToken;
-  
-  const models = powerbi.models;
-
-  const embedConfig = {
-    type: "report",
-    id: reportId,
-    embedUrl: embedUrl,
-    accessToken: embedToken,
-    tokenType: models.TokenType.Embed,
-    settings: {
-      panes: {
-        filters: { visible: false },
-        pageNavigation: { visible: true }
+module.exports = async function (context, req) {
+  try {
+    // MSAL config
+    const msalConfig = {
+      auth: {
+        clientId: process.env.POWERBI_CLIENT_ID,
+        authority: `https://login.microsoftonline.com/${process.env.POWERBI_TENANT_ID}`,
+        clientSecret: process.env.POWERBI_CLIENT_SECRET
       }
-    }
-  };
+    };
 
-  const report = powerbi.embed(reportContainer, embedConfig);
+    const cca = new msal.ConfidentialClientApplication(msalConfig);
 
-  loader.style.display = "none";
+    const tokenResponse = await cca.acquireTokenByClientCredential({
+      scopes: ["https://analysis.windows.net/powerbi/api/.default"]
+    });
 
-  document.getElementById("nextPage").onclick = async () => {
-    const pages = await report.getPages();
-    const active = pages.find(p => p.isActive);
-    const index = pages.indexOf(active);
-    if (index < pages.length - 1) pages[index + 1].setActive();
-  };
+    const accessToken = tokenResponse.accessToken;
 
-  document.getElementById("prevPage").onclick = async () => {
-    const pages = await report.getPages();
-    const active = pages.find(p => p.isActive);
-    const index = pages.indexOf(active);
-    if (index > 0) pages[index - 1].setActive();
-  };
+    const client = new PowerBiClient(accessToken);
 
-  document.getElementById("fullscreenBtn").onclick = () => {
-    if (reportContainer.requestFullscreen) reportContainer.requestFullscreen();
-  };
-}
+    const embedResponse = await client.generateEmbedToken({
+      reportId: process.env.POWERBI_REPORT_ID,
+      datasetId: process.env.POWERBI_DATASET_ID
+    });
+
+    context.res = {
+      status: 200,
+      body: {
+        embedUrl: process.env.POWERBI_EMBED_URL,
+        reportId: process.env.POWERBI_REPORT_ID,
+        embedToken: embedResponse.token
+      }
+    };
+  } catch (err) {
+    context.res = {
+      status: 500,
+      body: { error: err.message }
+    };
+  }
+};
