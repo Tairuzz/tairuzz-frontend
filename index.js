@@ -6,24 +6,23 @@ async function loadReport() {
   const loader = document.getElementById("loader");
   const reportContainer = document.getElementById("reportContainer");
 
+  // Show main content
+  document.getElementById("mainContent").style.display = "flex";
+
   loader.style.display = "flex";
   reportContainer.style.display = "block";
 
-  // Fetch embed configuration from your backend API
+  // Fetch embed configuration
   const response = await fetch("/api/get-embed-config");
   const config = await response.json();
-
-  const embedUrl = config.embedUrl;
-  const reportId = config.reportId;
-  const embedToken = config.embedToken;
 
   const models = window.powerbi.models;
 
   const embedConfig = {
     type: "report",
-    id: reportId,
-    embedUrl: embedUrl,
-    accessToken: embedToken,
+    id: config.reportId,
+    embedUrl: config.embedUrl,
+    accessToken: config.embedToken,
     tokenType: models.TokenType.Embed,
     settings: {
       panes: {
@@ -37,7 +36,7 @@ async function loadReport() {
 
   loader.style.display = "none";
 
-  // Next page
+  // Navigation buttons
   document.getElementById("nextPage").onclick = async () => {
     const pages = await report.getPages();
     const active = pages.find(p => p.isActive);
@@ -45,7 +44,6 @@ async function loadReport() {
     if (index < pages.length - 1) pages[index + 1].setActive();
   };
 
-  // Previous page
   document.getElementById("prevPage").onclick = async () => {
     const pages = await report.getPages();
     const active = pages.find(p => p.isActive);
@@ -53,10 +51,7 @@ async function loadReport() {
     if (index > 0) pages[index - 1].setActive();
   };
 
-  // Fullscreen
   document.getElementById("fullscreenBtn").onclick = () => {
-    if (reportContainer.requestFullscreen) {
-      reportContainer.requestFullscreen();
-    }
+    report.fullscreen();
   };
 }
