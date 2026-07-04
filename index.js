@@ -1,5 +1,3 @@
-import * as powerbi from "powerbi-client";
-
 window.onload = () => {
   loadReport();
 };
@@ -19,7 +17,7 @@ async function loadReport() {
   const reportId = config.reportId;
   const embedToken = config.embedToken;
 
-  const models = powerbi.models;
+  const models = window.powerbi.models;
 
   const embedConfig = {
     type: "report",
@@ -35,7 +33,7 @@ async function loadReport() {
     }
   };
 
-  const report = powerbi.embed(reportContainer, embedConfig);
+  const report = window.powerbi.embed(reportContainer, embedConfig);
 
   loader.style.display = "none";
 
