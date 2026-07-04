@@ -6,11 +6,13 @@ async function loadReport() {
   const loader = document.getElementById("loader");
   const reportContainer = document.getElementById("reportContainer");
 
+  // Show main content
   document.getElementById("mainContent").style.display = "flex";
 
   loader.style.display = "flex";
   reportContainer.style.display = "block";
 
+  // Fetch embed configuration
   const response = await fetch("/api/get-embed-config");
   const config = await response.json();
 
