@@ -1,7 +1,10 @@
 {
-  "type": "module",
+  "name": "get-embed-config",
+  "version": "1.0.0",
+  "main": "index.js",
   "dependencies": {
     "@azure/msal-node": "^1.17.0",
-    "node-fetch": "^3.3.2"
+    "powerbi-api": "^1.0.0",
+    "node-fetch": "^2.6.7"
   }
 }
