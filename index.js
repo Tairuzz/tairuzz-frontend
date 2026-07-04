@@ -12,6 +12,12 @@ async function loadReport() {
   loader.style.display = "flex";
   reportContainer.style.display = "block";
 
+  // Ensure Power BI client is loaded
+  if (!window.powerbi || !window.powerbi.models) {
+    console.error("Power BI client not loaded");
+    return;
+  }
+
   // Fetch embed configuration
   const response = await fetch("/api/get-embed-config");
   const config = await response.json();
