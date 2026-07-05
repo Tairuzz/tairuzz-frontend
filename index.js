@@ -38,7 +38,8 @@ async function loadReport() {
     }
   };
 
-  const report = window.powerbi.embed(reportContainer, embedConfig);
+  window.powerbi.embed(reportContainer, embedConfig);
+//  const report = window.powerbi.embed(reportContainer, embedConfig);
 
   loader.style.display = "none";
 }
