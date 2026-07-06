@@ -21,59 +21,33 @@
       }
 
       #loader {
-        flex: 0 0 auto;
         padding: 20px;
         font-size: 20px;
         font-weight: 600;
         display: none;
       }
 
-      /* This is the ONLY required container for Power BI */
       #embedContainer {
         flex: 1;
         width: 100%;
         height: 100%;
-      }
-
-      #navBar {
-        padding: 10px;
-        background: #fafafa;
-        border-bottom: 1px solid #eee;
-        display: none;
       }
     </style>
   </head>
 
   <body>
 
-    <!-- Header -->
     <header style="padding:20px; background:#f5f5f5; border-bottom:1px solid #ddd;">
       <h1 style="margin:0;">Tairuzz Analytics</h1>
-      <p style="margin:5px 0 0;">Your embedded football analytics dashboard</p>
-      <p>DEPLOY TEST</p>
+      <p>Your embedded football analytics dashboard</p>
     </header>
 
-    <!-- Main Content -->
     <div id="mainContent">
-
-      <!-- Navigation Bar -->
-      <div id="navBar">
-        <button id="prevPage">Previous Page</button>
-        <button id="nextPage">Next Page</button>
-        <button id="fullscreenBtn" style="float:right;">Full Screen</button>
-      </div>
-
-      <!-- Loader -->
       <div id="loader">Loading report…</div>
-
-      <!-- REQUIRED Power BI container -->
       <div id="embedContainer"></div>
     </div>
 
-    <!-- Power BI Client -->
     <script src="powerbi.min.js"></script>
-
-    <!-- Your Embed Logic -->
     <script src="index.js"></script>
 
   </body>
