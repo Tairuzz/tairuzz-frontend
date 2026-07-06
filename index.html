@@ -6,36 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style>
+      /* Full screen layout */
       html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow: hidden; /* prevent page scrolling */
-}
-     
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        overflow: hidden; /* prevent page scrolling */
+      }
+
       /* Left navigation bar */
       #sideNav {
-        position: absolute;
-        left: 0;
-        top: 70px; /* below header */
-        width: 120px;
-        height: calc(100% - 70px);
+        width: 180px; /* ⭐ wider nav bar */
+        height: 100%;
         background: #f0f0f0;
         border-right: 1px solid #ddd;
-        padding-top: 10px;
+        padding: 10px 0;
         box-sizing: border-box;
-        z-index: 20;
-        overflow-y: auto;
+        overflow-y: auto; /* ⭐ scroll only inside nav */
       }
 
       #sideNav button {
         width: 100%;
-        padding: 10px;
-        margin-bottom: 5px;
+        padding: 12px;
+        margin-bottom: 6px;
         background: white;
         border: 1px solid #ccc;
         cursor: pointer;
@@ -47,11 +44,13 @@
         background: #e6e6e6;
       }
 
+      /* Main content area */
       #mainContent {
         flex: 1;
         display: flex;
         flex-direction: column;
-        margin-left: 120px; /* make space for nav */
+        height: 100%;
+        width: calc(100% - 180px); /* ⭐ report stretches fully */
       }
 
       #loader {
@@ -65,10 +64,14 @@
         flex: 1;
         width: 100%;
         height: 100%;
+        position: relative;
       }
 
       /* Force Power BI iframe full size */
       #embedContainer iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100% !important;
         height: 100% !important;
         border: none;
@@ -77,11 +80,6 @@
   </head>
 
   <body>
-
-    <header style="padding:5px; background:#f5f5f5; border-bottom:1px solid #ddd;">
-      <h1 style="margin:0;">Tairuzz Analytics</h1>
-      <p>Your embedded football analytics dashboard</p>
-    </header>
 
     <!-- Left-side navigation -->
     <div id="sideNav">
