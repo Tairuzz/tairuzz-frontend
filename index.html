@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Tairuzz Analytics</title>
     <meta charset="UTF-8" />
+    <title>Tairuzz Analytics</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style>
@@ -34,32 +34,46 @@
         font-size: 24px;
         font-weight: 600;
       }
+
+      #navBar {
+        padding: 10px;
+        background: #fafafa;
+        border-bottom: 1px solid #eee;
+        display: none;
+      }
     </style>
   </head>
 
   <body>
 
-    <div style="padding:20px; background:#f5f5f5; border-bottom:1px solid #ddd;">
+    <!-- Header -->
+    <header style="padding:20px; background:#f5f5f5; border-bottom:1px solid #ddd;">
       <h1 style="margin:0;">Tairuzz Analytics</h1>
       <p style="margin:5px 0 0;">Your embedded football analytics dashboard</p>
       <p>DEPLOY TEST</p>
-    </div>
+    </header>
 
+    <!-- Main Content -->
     <div id="mainContent">
-      <div id="navBar" style="padding:10px; background:#fafafa; border-bottom:1px solid #eee; display:none;">
+
+      <!-- Navigation Bar -->
+      <div id="navBar">
         <button id="prevPage">Previous Page</button>
         <button id="nextPage">Next Page</button>
         <button id="fullscreenBtn" style="float:right;">Full Screen</button>
       </div>
 
+      <!-- Loader -->
       <div id="loader">Loading report…</div>
+
+      <!-- Power BI Report Container -->
       <div id="reportContainer"></div>
     </div>
 
-    <!-- Load the correct Power BI client -->
+    <!-- Power BI Client -->
     <script src="powerbi.min.js"></script>
 
-    <!-- Your embed logic -->
+    <!-- Your Embed Logic -->
     <script src="index.js"></script>
 
   </body>
