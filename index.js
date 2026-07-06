@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  const models = window['powerbi-client'].models;
+  // CORRECT namespace for your environment
+  const models = window.powerbi.models;
 
   const embedConfig = {
     type: "report",
@@ -35,7 +36,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   };
 
-  const report = window['powerbi-client'].embed(embedContainer, embedConfig);
+  // CORRECT embed call for your environment
+  const report = window.powerbi.embed(embedContainer, embedConfig);
 
   report.on("loaded", () => {
     loader.style.display = "none";
