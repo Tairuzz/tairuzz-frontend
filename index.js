@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const loader = document.getElementById("loader");
-  const reportContainer = document.getElementById("reportContainer");
-  const mainContent = document.getElementById("mainContent");
+  const embedContainer = document.getElementById("embedContainer");
 
-  // Show main content + loader
-  mainContent.style.display = "flex";
+  if (!loader || !embedContainer) {
+    console.error("Required DOM elements missing");
+    return;
+  }
+
   loader.style.display = "flex";
-  reportContainer.style.display = "block";
 
-  // Fetch embed configuration
   let config;
   try {
     const response = await fetch("/api/get-embed-config");
@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Use the correct namespace from Developer Playground
   const models = window['powerbi-client'].models;
 
   const embedConfig = {
@@ -36,15 +35,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   };
 
-  // Embed using the correct namespace
-  const report = window['powerbi-client'].embed(reportContainer, embedConfig);
+  const report = window['powerbi-client'].embed(embedContainer, embedConfig);
 
-  // Hide loader when report is loaded
   report.on("loaded", () => {
     loader.style.display = "none";
   });
 
-  // Optional error logging
   report.on("error", (event) => {
     console.error("Power BI Embed Error:", event.detail);
   });
