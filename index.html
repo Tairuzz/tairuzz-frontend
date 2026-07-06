@@ -6,14 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style>
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-
+      html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden; /* prevent page scrolling */
+}
+     
       /* Left navigation bar */
       #sideNav {
         position: absolute;
@@ -26,6 +29,7 @@
         padding-top: 10px;
         box-sizing: border-box;
         z-index: 20;
+        overflow-y: auto;
       }
 
       #sideNav button {
