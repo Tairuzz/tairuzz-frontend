@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     settings: {
       panes: {
         filters: { visible: false },
-        pageNavigation: { visible: true }
+        pageNavigation: { visible: false } // ⭐ Hide Power BI default bottom tabs
       }
     }
   };
@@ -56,16 +56,30 @@ document.addEventListener("DOMContentLoaded", async () => {
       buttons.forEach(btn => {
         btn.onclick = () => {
           const targetName = btn.getAttribute("data-page");
-
           const targetPage = pages.find(p => p.displayName === targetName);
 
           if (targetPage) {
             targetPage.setActive();
+
+            // Remove highlight from all buttons
+            buttons.forEach(b => b.classList.remove("activePage"));
+
+            // Highlight the clicked button
+            btn.classList.add("activePage");
           } else {
             console.warn("Page not found:", targetName);
           }
         };
       });
+
+      // ⭐ Auto-highlight the initially active page
+      const activePage = pages.find(p => p.isActive);
+      if (activePage) {
+        const activeBtn = [...buttons].find(
+          b => b.getAttribute("data-page") === activePage.displayName
+        );
+        if (activeBtn) activeBtn.classList.add("activePage");
+      }
     });
   });
 
