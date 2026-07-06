@@ -1,14 +1,4 @@
-// Wait for DOM + Power BI client to be ready before embedding
-document.addEventListener("DOMContentLoaded", () => {
-  const waitForPowerBi = setInterval(() => {
-    if (window.powerbi && window.powerbi.models) {
-      clearInterval(waitForPowerBi);
-      loadReport();
-    }
-  }, 50);
-});
-
-async function loadReport() {
+document.addEventListener("DOMContentLoaded", async () => {
   const loader = document.getElementById("loader");
   const reportContainer = document.getElementById("reportContainer");
   const mainContent = document.getElementById("mainContent");
@@ -29,10 +19,9 @@ async function loadReport() {
     return;
   }
 
-  // Power BI models (now guaranteed to exist)
-  const models = window.powerbi.models;
+  // Use the correct namespace from Developer Playground
+  const models = window['powerbi-client'].models;
 
-  // Build embed configuration
   const embedConfig = {
     type: "report",
     id: config.reportId,
@@ -47,11 +36,16 @@ async function loadReport() {
     }
   };
 
-  // Embed the report
-  const report = window.powerbi.embed(reportContainer, embedConfig);
+  // Embed using the correct namespace
+  const report = window['powerbi-client'].embed(reportContainer, embedConfig);
 
-  // Hide loader once report is loaded
+  // Hide loader when report is loaded
   report.on("loaded", () => {
     loader.style.display = "none";
   });
-}
+
+  // Optional error logging
+  report.on("error", (event) => {
+    console.error("Power BI Embed Error:", event.detail);
+  });
+});
