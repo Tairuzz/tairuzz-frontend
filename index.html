@@ -16,23 +16,23 @@
 
       #mainContent {
         flex: 1;
-        display: none;
+        display: flex;
         flex-direction: column;
       }
 
-      #reportContainer {
-        flex: 1;
-        width: 100%;
+      #loader {
+        flex: 0 0 auto;
+        padding: 20px;
+        font-size: 20px;
+        font-weight: 600;
         display: none;
       }
 
-      #loader {
+      /* This is the ONLY required container for Power BI */
+      #embedContainer {
         flex: 1;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        font-weight: 600;
+        width: 100%;
+        height: 100%;
       }
 
       #navBar {
@@ -66,8 +66,8 @@
       <!-- Loader -->
       <div id="loader">Loading report…</div>
 
-      <!-- Power BI Report Container -->
-      <div id="reportContainer"></div>
+      <!-- REQUIRED Power BI container -->
+      <div id="embedContainer"></div>
     </div>
 
     <!-- Power BI Client -->
