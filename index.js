@@ -25,7 +25,7 @@ if (!powerbiClient || !powerbiClient.models) {
     return;
 }
   // CORRECT namespace for your environment
-  const models = window.powerbi.models;
+  const models = powerbiClient.models;
 
   const embedConfig = {
     type: "report",
