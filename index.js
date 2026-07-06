@@ -1,7 +1,7 @@
 // Wait for DOM + Power BI client to be ready before embedding
 document.addEventListener("DOMContentLoaded", () => {
   const waitForPowerBi = setInterval(() => {
-    if (window.powerbi && window.powerbi.embed) {
+    if (window.powerbi && window.powerbi.models) {
       clearInterval(waitForPowerBi);
       loadReport();
     }
@@ -29,7 +29,7 @@ async function loadReport() {
     return;
   }
 
-  // Power BI models
+  // Power BI models (now guaranteed to exist)
   const models = window.powerbi.models;
 
   // Build embed configuration
@@ -54,24 +54,4 @@ async function loadReport() {
   report.on("loaded", () => {
     loader.style.display = "none";
   });
-
-  // Optional: Page navigation buttons
-  const prevBtn = document.getElementById("prevPage");
-  const nextBtn = document.getElementById("nextPage");
-
-  if (prevBtn && nextBtn) {
-    prevBtn.onclick = async () => {
-      const pages = await report.getPages();
-      const active = pages.find(p => p.isActive);
-      const index = pages.indexOf(active);
-      if (index > 0) pages[index - 1].setActive();
-    };
-
-    nextBtn.onclick = async () => {
-      const pages = await report.getPages();
-      const active = pages.find(p => p.isActive);
-      const index = pages.indexOf(active);
-      if (index < pages.length - 1) pages[index + 1].setActive();
-    };
-  }
 }
