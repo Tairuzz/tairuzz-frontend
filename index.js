@@ -18,7 +18,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     loader.innerText = "Failed to load report.";
     return;
   }
+const powerbiClient = window['powerbi-client'];
 
+if (!powerbiClient || !powerbiClient.models) {
+    console.error("Power BI client library not loaded");
+    return;
+}
   // CORRECT namespace for your environment
   const models = window.powerbi.models;
 
