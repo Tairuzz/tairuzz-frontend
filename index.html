@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style>
-      /* Full screen layout */
       html, body {
         height: 100%;
         margin: 0;
@@ -15,18 +14,17 @@
         display: flex;
         flex-direction: row;
         width: 100%;
-        overflow: hidden; /* prevent page scrolling */
+        overflow: hidden;
       }
 
-      /* Left navigation bar */
       #sideNav {
-        width: 200px; /* wider nav bar */
+        width: 200px;
         height: 100%;
         background: #f0f0f0;
         border-right: 1px solid #ddd;
         padding: 10px 0;
         box-sizing: border-box;
-        overflow-y: auto; /* scroll only inside nav */
+        overflow-y: auto;
       }
 
       #sideNav button {
@@ -44,7 +42,6 @@
         background: #e6e6e6;
       }
 
-      /* Active page highlight */
       #sideNav button.activePage {
         background: #AF9CF4;
         color: white;
@@ -52,13 +49,12 @@
         font-weight: bold;
       }
 
-      /* Main content area */
       #mainContent {
         flex: 1;
         display: flex;
         flex-direction: column;
         height: 100%;
-        width: calc(100% - 200px); /* report stretches fully */
+        width: calc(100% - 200px);
       }
 
       #loader {
@@ -75,7 +71,6 @@
         position: relative;
       }
 
-      /* Force Power BI iframe full size */
       #embedContainer iframe {
         position: absolute;
         top: 0;
@@ -89,7 +84,12 @@
 
   <body>
 
-    <!-- Left-side navigation -->
+    <script>
+      if (!localStorage.getItem("tairuzz_auth")) {
+        window.location.href = "/login.html";
+      }
+    </script>
+
     <div id="sideNav">
       <button data-page="League Table">League Table</button>
       <button data-page="Profile">Profile</button>
@@ -119,27 +119,5 @@
     <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.22.0/dist/powerbi.min.js?v=999999"></script>
     <script src="index.js"></script>
 
-<body>
-
-  <script>
-    if (!localStorage.getItem("tairuzz_auth")) {
-      window.location.href = "/login.html";
-    }
-  </script>
-
-  <!-- Left-side navigation -->
-  <div id="sideNav">
-    <!-- your buttons here -->
-  </div>
-
-  <div id="mainContent">
-    <div id="loader">Loading report…</div>
-    <div id="embedContainer"></div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.22.0/dist/powerbi.min.js?v=999999"></script>
-  <script src="index.js"></script>
-
-</body>
+  </body>
 </html>
-
