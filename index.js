@@ -11,8 +11,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let config;
   try {
-    const response = await fetch("/api/get-embed-config");
-    config = await response.json();
+    const response = await fetch("/api/get-embed-config", {
+  headers: {
+    "x-tairuzz-auth": localStorage.getItem("tairuzz_auth")
+  }
+});
+config = await response.json();
   } catch (err) {
     console.error("Failed to fetch embed config:", err);
     loader.innerText = "Failed to load report.";
