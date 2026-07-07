@@ -1,3 +1,14 @@
+module.exports = async function (context, req) {
+
+  const auth = req.headers["x-tairuzz-auth"];
+
+  if (auth !== "true") {
+    context.res = {
+      status: 401,
+      body: { error: "Unauthorized" }
+    };
+    return;
+  }
 const msal = require("@azure/msal-node");
 const fetch = require("node-fetch");
 
