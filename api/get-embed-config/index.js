@@ -1,7 +1,10 @@
+const msal = require("@azure/msal-node");
+const fetch = require("node-fetch");
+
 module.exports = async function (context, req) {
 
+  // SIMPLE AUTH CHECK
   const auth = req.headers["x-tairuzz-auth"];
-
   if (auth !== "true") {
     context.res = {
       status: 401,
@@ -9,10 +12,7 @@ module.exports = async function (context, req) {
     };
     return;
   }
-const msal = require("@azure/msal-node");
-const fetch = require("node-fetch");
 
-module.exports = async function (context, req) {
   try {
     // MSAL config
     const msalConfig = {
@@ -44,9 +44,7 @@ module.exports = async function (context, req) {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${accessToken}`
         },
-        body: JSON.stringify({
-          accessLevel: "view"
-        })
+        body: JSON.stringify({ accessLevel: "view" })
       }
     );
 
@@ -60,6 +58,7 @@ module.exports = async function (context, req) {
         embedToken: embedTokenJson.token
       }
     };
+
   } catch (err) {
     context.res = {
       status: 500,
