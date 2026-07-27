@@ -5,7 +5,7 @@ const fetch = require("node-fetch");
 // POWER BI CAPACITY WAKE/SLEEP LOGIC
 // -------------------------------
 
-// Your Automation Webhooks
+// Webhook URLs from environment variables
 const RESUME_URL = process.env.RESUME_WEBHOOK_URL;
 const SUSPEND_URL = process.env.SUSPEND_WEBHOOK_URL;
 
@@ -13,19 +13,37 @@ const SUSPEND_URL = process.env.SUSPEND_WEBHOOK_URL;
 let inactivityTimer = null;
 
 // Wake capacity immediately
-function wakeCapacity() {
-    if (!RESUME_URL) return;
-    fetch(RESUME_URL, { method: "POST" }).catch(() => {});
+function wakeCapacity(context) {
+    if (!RESUME_URL) {
+        context.log("⚠️ Resume webhook missing — cannot wake capacity");
+        return;
+    }
+
+    context.log("🔵 Wake event triggered — calling Resume webhook");
+
+    fetch(RESUME_URL, { method: "POST" })
+        .then(() => context.log("✅ Resume webhook call succeeded"))
+        .catch(err => context.log("❌ Resume webhook call failed: " + err.message));
 }
 
 // Sleep capacity after 3 minutes of inactivity
-function resetSleepTimer() {
-    if (!SUSPEND_URL) return;
+function resetSleepTimer(context) {
+    if (!SUSPEND_URL) {
+        context.log("⚠️ Suspend webhook missing — cannot schedule sleep");
+        return;
+    }
 
-    if (inactivityTimer) clearTimeout(inactivityTimer);
+    if (inactivityTimer) {
+        context.log("🔁 Resetting inactivity timer");
+        clearTimeout(inactivityTimer);
+    }
 
     inactivityTimer = setTimeout(() => {
-        fetch(SUSPEND_URL, { method: "POST" }).catch(() => {});
+        context.log("🟠 Sleep event triggered — calling Suspend webhook");
+
+        fetch(SUSPEND_URL, { method: "POST" })
+            .then(() => context.log("✅ Suspend webhook call succeeded"))
+            .catch(err => context.log("❌ Suspend webhook call failed: " + err.message));
     }, 3 * 60 * 1000); // 3 minutes
 }
 
@@ -35,9 +53,12 @@ function resetSleepTimer() {
 
 module.exports = async function (context, req) {
 
+    context.log("📥 Incoming embed config request");
+
     // SIMPLE AUTH CHECK
     const auth = req.headers["x-tairuzz-auth"];
     if (auth !== "true") {
+        context.log("⛔ Unauthorized request blocked");
         context.res = {
             status: 401,
             body: { error: "Unauthorized" }
@@ -46,12 +67,14 @@ module.exports = async function (context, req) {
     }
 
     // WAKE CAPACITY ON ANY REQUEST
-    wakeCapacity();
+    wakeCapacity(context);
 
     // RESET INACTIVITY TIMER
-    resetSleepTimer();
+    resetSleepTimer(context);
 
     try {
+        context.log("🔐 Acquiring Power BI access token");
+
         // MSAL config
         const msalConfig = {
             auth: {
@@ -70,9 +93,13 @@ module.exports = async function (context, req) {
 
         const accessToken = tokenResponse.accessToken;
 
+        context.log("🔑 Power BI access token acquired successfully");
+
         // Generate embed token via REST API
         const workspaceId = process.env.POWERBI_WORKSPACE_ID;
         const reportId = process.env.POWERBI_REPORT_ID;
+
+        context.log(`📡 Generating embed token for report ${reportId}`);
 
         const embedTokenResponse = await fetch(
             `https://api.powerbi.com/v1.0/myorg/groups/${workspaceId}/reports/${reportId}/GenerateToken`,
@@ -88,6 +115,8 @@ module.exports = async function (context, req) {
 
         const embedTokenJson = await embedTokenResponse.json();
 
+        context.log("🎫 Embed token generated successfully");
+
         context.res = {
             status: 200,
             body: {
@@ -97,7 +126,11 @@ module.exports = async function (context, req) {
             }
         };
 
+        context.log("📤 Embed config response sent");
+
     } catch (err) {
+        context.log("❌ Error in embed config function: " + err.message);
+
         context.res = {
             status: 500,
             body: { error: err.message }
