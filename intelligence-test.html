@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Football Intelligence Engine — Test Console</title>
+    <style>
+        body { font-family: Arial; padding: 20px; max-width: 900px; margin: auto; }
+        textarea { width: 100%; height: 120px; font-size: 14px; }
+        button { padding: 10px 20px; margin-top: 10px; font-size: 16px; cursor: pointer; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 8px; white-space: pre-wrap; }
+        .section { margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+<h2>Football Intelligence Engine — Live Test Console</h2>
+<p>Type any football intelligence query below and see the engine respond live.</p>
+
+<div class="section">
+    <label><strong>Your Query:</strong></label>
+    <textarea id="queryInput">Give me intelligence on Arsenal transfers</textarea>
+    <button onclick="runIntelligence()">Run Intelligence</button>
+</div>
+
+<div class="section">
+    <h3>Formatted Intelligence</h3>
+    <pre id="formattedOutput">Waiting for query...</pre>
+</div>
+
+<div class="section">
+    <h3>Raw JSON Response</h3>
+    <pre id="rawOutput">Waiting for query...</pre>
+</div>
+
+<script>
+async function runIntelligence() {
+    const query = document.getElementById("queryInput").value;
+
+    const response = await fetch("/api/intelligence", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "x-tairuzz-auth": "true"
+        },
+        body: JSON.stringify({ query })
+    });
+
+    const json = await response.json();
+
+    document.getElementById("rawOutput").textContent =
+        JSON.stringify(json, null, 2);
+
+    document.getElementById("formattedOutput").textContent =
+        json.intelligence || "No formatted intelligence returned";
+}
+</script>
+
+</body>
+</html>
