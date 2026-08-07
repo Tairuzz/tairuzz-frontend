@@ -1,124 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <title>Tairuzz Analytics</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        overflow: hidden;
-      }
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
 
-      #sideNav {
-        width: 200px;
-        height: 100%;
-        background: #f0f0f0;
-        border-right: 1px solid #ddd;
-        padding: 10px 0;
-        box-sizing: border-box;
-        overflow-y: auto;
-      }
+        /* HEADER */
+        .header {
+            height: 52px;
+            background: #1f1f1f;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+        }
 
-      #sideNav button {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 6px;
-        background: white;
-        border: 1px solid #ccc;
-        cursor: pointer;
-        text-align: left;
-        font-size: 14px;
-      }
+        .header img {
+            height: 32px;
+            margin-right: 12px;
+        }
 
-      #sideNav button:hover {
-        background: #e6e6e6;
-      }
+        .header-title {
+            font-size: 16px;
+            font-weight: 500;
+        }
 
-      #sideNav button.activePage {
-        background: #AF9CF4;
-        color: white;
-        border-color: #005a9e;
-        font-weight: bold;
-      }
+        /* TOP NAVIGATION */
+        .nav {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            display: flex;
+            gap: 24px;
+            padding: 12px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid #3a3a3a;
+        }
 
-      #mainContent {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        width: calc(100% - 200px);
-      }
+        .nav button {
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            padding-bottom: 4px;
+        }
 
-      #loader {
-        padding: 20px;
-        font-size: 20px;
-        font-weight: 600;
-        display: none;
-      }
+        .nav button.activePage {
+            color: #3aa6ff;
+            border-bottom: 2px solid #3aa6ff;
+        }
 
-      #embedContainer {
-        flex: 1;
-        width: 100%;
-        height: 100%;
-        position: relative;
-      }
+        .nav button:hover {
+            color: #ffcc00;
+        }
 
-      #embedContainer iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100% !important;
-        height: 100% !important;
-        border: none;
-      }
+        /* REPORT AREA */
+        #mainContent {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #loader {
+            padding: 20px;
+            font-size: 20px;
+            font-weight: 600;
+            display: none;
+        }
+
+        #embedContainer {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        #embedContainer iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            border: none;
+        }
     </style>
-  </head>
+</head>
 
-  <body>
+<body>
 
+    <!-- AUTH CHECK -->
     <script>
-      if (!localStorage.getItem("tairuzz_auth")) {
-        window.location.href = "/login.html";
-      }
+        if (!localStorage.getItem("tairuzz_auth")) {
+            window.location.href = "/login.html";
+        }
     </script>
 
-    <div id="sideNav">
-      <button data-page="League Table">League Table</button>
-      <button data-page="Profile">Profile</button>
-      <button data-page="Performance Rank">Performance Rank</button>
-      <button data-page="Goal Impact">Goal Impact</button>
-      <button data-page="Season on Season player">Season on Season player</button>
-      <button data-page="Season on season club">Season on Season Club</button>
-      <button data-page="Fixture Results by xG">Fixture Results by xG</button>
-      <button data-page="Team Results by xG">Team Results by xG</button>
-      <button data-page="Title Race">Title Race</button>
-      <button data-page="Fixtures and Result">Fixtures and Result</button>
-      <button data-page="Attack Threat">Attack Threat</button>
-      <button data-page="KPIs Plot">KPIs Plot</button>
-      <button data-page="Performance Metrics">Performance Metrics</button>
-      <button data-page="Team fixture Performance ">Team Fixture Performance</button>
-      <button data-page="Compare Performance Metrics">Compare Performance Metrics</button>
-      <button data-page="Goal Placement">Goal Placement</button>
-      <button data-page="Goal Categories">Goal Categories</button>
-      <button data-page="Goal Categories2">Goal Categories2</button>
-      <button data-page="Goal Analysis">Goal Analysis</button>
+    <!-- HEADER -->
+    <div class="header">
+        <img src="club-logo.png" alt="Club Logo">
+        <div class="header-title">Club A Analytics</div>
     </div>
 
+    <!-- TOP NAVIGATION (REPLACES SIDE NAV) -->
+    <div class="nav" id="sideNav">
+        <button data-page="League Table">League Table</button>
+        <button data-page="Profile">Profile</button>
+        <button data-page="Performance Rank">Performance Rank</button>
+        <button data-page="Goal Impact">Goal Impact</button>
+        <button data-page="Season on Season player">Season on Season player</button>
+        <button data-page="Season on season club">Season on Season Club</button>
+        <button data-page="Fixture Results by xG">Fixture Results by xG</button>
+        <button data-page="Team Results by xG">Team Results by xG</button>
+        <button data-page="Title Race">Title Race</button>
+        <button data-page="Fixtures and Result">Fixtures and Result</button>
+        <button data-page="Attack Threat">Attack Threat</button>
+        <button data-page="KPIs Plot">KPIs Plot</button>
+        <button data-page="Performance Metrics">Performance Metrics</button>
+        <button data-page="Team fixture Performance ">Team Fixture Performance</button>
+        <button data-page="Compare Performance Metrics">Compare Performance Metrics</button>
+        <button data-page="Goal Placement">Goal Placement</button>
+        <button data-page="Goal Categories">Goal Categories</button>
+        <button data-page="Goal Categories2">Goal Categories2</button>
+        <button data-page="Goal Analysis">Goal Analysis</button>
+    </div>
+
+    <!-- REPORT AREA -->
     <div id="mainContent">
-      <div id="loader">Loading report…</div>
-      <div id="embedContainer"></div>
+        <div id="loader">Loading report…</div>
+        <div id="embedContainer"></div>
     </div>
 
+    <!-- POWER BI -->
     <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.22.0/dist/powerbi.min.js?v=999999"></script>
     <script src="index.js"></script>
 
-  </body>
+</body>
 </html>
