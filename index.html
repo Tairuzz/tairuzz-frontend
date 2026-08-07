@@ -7,53 +7,26 @@
 
     <style>
         html, body {
+            height: 100%;
             margin: 0;
             padding: 0;
-            height: 100%;
-            width: 100%;
             font-family: Arial, sans-serif;
-            overflow: hidden;
             display: flex;
-            flex-direction: column;
-        }
-
-        /* HEADER */
-        .header {
-            height: 52px;
-            background: #1f1f1f;
-            color: white;
-            display: flex;
-            align-items: center;
-            padding: 0 16px;
-            flex-shrink: 0;
-        }
-
-        .header img {
-            height: 32px;
-            margin-right: 12px;
-        }
-
-        .header-title {
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        /* MAIN LAYOUT */
-        .layout {
-            display: flex;
-            height: calc(100% - 52px);
+            flex-direction: row; /* RESTORED */
             width: 100%;
+            overflow: hidden;
         }
 
         /* LEFT NAV (scrollable) */
         #sideNav {
             width: 220px;
+            height: 100%;
             background: #2a2a2a;
             color: #e0e0e0;
             border-right: 1px solid #3a3a3a;
             padding: 12px 0;
+            box-sizing: border-box;
             overflow-y: auto;
-            flex-shrink: 0;
         }
 
         #sideNav button {
@@ -77,24 +50,41 @@
             border-left: 3px solid #3aa6ff;
         }
 
-        /* REPORT AREA */
+        /* MAIN CONTENT (full height) */
         #mainContent {
             flex: 1;
             display: flex;
             flex-direction: column;
+            height: 100%; /* RESTORED */
+            width: calc(100% - 220px); /* RESTORED */
         }
 
-        #loader {
-            padding: 20px;
-            font-size: 20px;
-            font-weight: 600;
-            display: none;
+        /* HEADER (inside mainContent) */
+        .header {
+            height: 52px;
+            background: #1f1f1f;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            flex-shrink: 0;
         }
 
+        .header img {
+            height: 32px;
+            margin-right: 12px;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* REPORT AREA (full height) */
         #embedContainer {
             flex: 1;
             width: 100%;
-            height: 100%;
+            height: 100%; /* RESTORED */
             position: relative;
         }
 
@@ -105,6 +95,13 @@
             width: 100% !important;
             height: 100% !important;
             border: none;
+        }
+
+        #loader {
+            padding: 20px;
+            font-size: 20px;
+            font-weight: 600;
+            display: none;
         }
     </style>
 </head>
@@ -118,43 +115,41 @@
         }
     </script>
 
-    <!-- HEADER -->
-    <div class="header">
-        <img src="club-logo.png" alt="Club Logo">
-        <div class="header-title">Club A Analytics</div>
+    <!-- LEFT NAV -->
+    <div id="sideNav">
+        <button data-page="League Table">League Table</button>
+        <button data-page="Profile">Profile</button>
+        <button data-page="Performance Rank">Performance Rank</button>
+        <button data-page="Goal Impact">Goal Impact</button>
+        <button data-page="Season on Season player">Season on Season player</button>
+        <button data-page="Season on season club">Season on Season Club</button>
+        <button data-page="Fixture Results by xG">Fixture Results by xG</button>
+        <button data-page="Team Results by xG">Team Results by xG</button>
+        <button data-page="Title Race">Title Race</button>
+        <button data-page="Fixtures and Result">Fixtures and Result</button>
+        <button data-page="Attack Threat">Attack Threat</button>
+        <button data-page="KPIs Plot">KPIs Plot</button>
+        <button data-page="Performance Metrics">Performance Metrics</button>
+        <button data-page="Team fixture Performance ">Team Fixture Performance</button>
+        <button data-page="Compare Performance Metrics">Compare Performance Metrics</button>
+        <button data-page="Goal Placement">Goal Placement</button>
+        <button data-page="Goal Categories">Goal Categories</button>
+        <button data-page="Goal Categories2">Goal Categories2</button>
+        <button data-page="Goal Analysis">Goal Analysis</button>
     </div>
 
-    <!-- MAIN LAYOUT -->
-    <div class="layout">
+    <!-- MAIN CONTENT -->
+    <div id="mainContent">
 
-        <!-- LEFT SCROLLABLE NAV -->
-        <div id="sideNav">
-            <button data-page="League Table">League Table</button>
-            <button data-page="Profile">Profile</button>
-            <button data-page="Performance Rank">Performance Rank</button>
-            <button data-page="Goal Impact">Goal Impact</button>
-            <button data-page="Season on Season player">Season on Season player</button>
-            <button data-page="Season on season club">Season on Season Club</button>
-            <button data-page="Fixture Results by xG">Fixture Results by xG</button>
-            <button data-page="Team Results by xG">Team Results by xG</button>
-            <button data-page="Title Race">Title Race</button>
-            <button data-page="Fixtures and Result">Fixtures and Result</button>
-            <button data-page="Attack Threat">Attack Threat</button>
-            <button data-page="KPIs Plot">KPIs Plot</button>
-            <button data-page="Performance Metrics">Performance Metrics</button>
-            <button data-page="Team fixture Performance ">Team Fixture Performance</button>
-            <button data-page="Compare Performance Metrics">Compare Performance Metrics</button>
-            <button data-page="Goal Placement">Goal Placement</button>
-            <button data-page="Goal Categories">Goal Categories</button>
-            <button data-page="Goal Categories2">Goal Categories2</button>
-            <button data-page="Goal Analysis">Goal Analysis</button>
+        <!-- HEADER -->
+        <div class="header">
+            <img src="club-logo.png" alt="Club Logo">
+            <div class="header-title">Club A Analytics</div>
         </div>
 
-        <!-- REPORT AREA -->
-        <div id="mainContent">
-            <div id="loader">Loading report…</div>
-            <div id="embedContainer"></div>
-        </div>
+        <!-- REPORT -->
+        <div id="loader">Loading report…</div>
+        <div id="embedContainer"></div>
 
     </div>
 
