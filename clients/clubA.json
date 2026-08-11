@@ -1,0 +1,29 @@
+{
+  "clientName": "Club A Analytics",
+  "clientLogo": "/logos/clubA.png",
+  "accentColor": "#ffcc00",
+  "tier": "premium",
+
+  "tabs": {
+    "leagueTable": true,
+    "profile": true,
+    "performanceRank": true,
+    "goalImpact": true,
+    "seasonOnSeasonPlayer": true,
+    "seasonOnSeasonClub": true,
+    "fixtureResultsByXG": true,
+    "teamResultsByXG": true,
+    "titleRace": true,
+    "fixturesAndResult": true,
+    "attackThreat": true,
+    "kpisPlot": true,
+    "performanceMetrics": true,
+    "teamFixturePerformance": true,
+    "comparePerformanceMetrics": true,
+    "goalPlacement": true,
+    "goalCategories": true,
+    "goalCategories2": true,
+    "goalAnalysis": true,
+    "goalFlow": true
+  }
+}
