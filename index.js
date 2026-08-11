@@ -11,8 +11,43 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  loader.style.display = "block"; // FIXED
+  loader.style.display = "block";
 
+  // ---------------------------------------------------------
+  // 1. LOAD CLIENT CONFIG (branding + tier)
+  // ---------------------------------------------------------
+  let clientConfig;
+  try {
+    const clientResponse = await fetch("/api/get-client-config", {
+      headers: {
+        "x-tairuzz-auth": localStorage.getItem("tairuzz_auth")
+      }
+    });
+    clientConfig = await clientResponse.json();
+  } catch (err) {
+    console.error("Failed to fetch client config:", err);
+    return;
+  }
+
+  // Apply branding
+  const headerTitle = document.querySelector(".header-title");
+  const headerLogo = document.querySelector(".header img");
+
+  if (headerTitle) headerTitle.innerText = clientConfig.clientName || "Analytics";
+  if (headerLogo) headerLogo.src = clientConfig.clientLogo || "/default-logo.png";
+
+  // Apply tier rules (hide tabs)
+  const navButtons = document.querySelectorAll("#sideNav button");
+  navButtons.forEach(btn => {
+    const key = btn.getAttribute("data-key");
+    if (key && clientConfig.tabs && clientConfig.tabs[key] === false) {
+      btn.style.display = "none";
+    }
+  });
+
+  // ---------------------------------------------------------
+  // 2. LOAD POWER BI CONFIG
+  // ---------------------------------------------------------
   let config;
   try {
     const response = await fetch("/api/get-embed-config", {
@@ -51,6 +86,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const report = window.powerbi.embed(embedContainer, embedConfig);
 
+  // ---------------------------------------------------------
+  // 3. PAGE SWITCHING (unchanged)
+  // ---------------------------------------------------------
   report.on("loaded", () => {
     loader.style.display = "none";
 
