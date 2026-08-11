@@ -65,28 +65,34 @@
   </div>
 
   <script>
-    function login() {
-  const user = document.getElementById("username").value.trim();
-  const pass = document.getElementById("password").value.trim();
+  <script>
+  function login() {
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
 
-  // Example: admin belongs to clubA
-  if (user === "admin" && pass === "1234@admin") {
-
-    const tokenPayload = {
-      clientId: "clubA",   // <-- THIS IS WHERE YOU SET THE CLUB
-      user: "admin"
+    // TEMPORARY HARDCODED LOGIN (until real API is built)
+    const accounts = {
+      "clubA": { password: "passA", clientId: "clubA" },
+      "clubB": { password: "passB", clientId: "clubB" },
+      "clubC": { password: "passC", clientId: "clubC" }
     };
 
-    const token = btoa(JSON.stringify(tokenPayload));
+    if (accounts[user] && accounts[user].password === pass) {
 
-    localStorage.setItem("tairuzz_auth", token);
-    window.location.href = "/";
-  } else {
-    document.getElementById("error").style.display = "block";
+      const tokenPayload = {
+        clientId: accounts[user].clientId,
+        user: user
+      };
+
+      const token = btoa(JSON.stringify(tokenPayload));
+
+      localStorage.setItem("tairuzz_auth", token);
+      window.location.href = "/";
+    } else {
+      document.getElementById("error").style.display = "block";
+    }
   }
-}
-
-  </script>
+</script>
 
 </body>
 </html>
