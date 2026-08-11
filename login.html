@@ -66,16 +66,26 @@
 
   <script>
     function login() {
-      const user = document.getElementById("username").value.trim();
-      const pass = document.getElementById("password").value.trim();
+  const user = document.getElementById("username").value.trim();
+  const pass = document.getElementById("password").value.trim();
 
-      if (user === "admin" && pass === "1234@admin") {
-        localStorage.setItem("tairuzz_auth", "true");
-        window.location.href = "/";
-      } else {
-        document.getElementById("error").style.display = "block";
-      }
-    }
+  // Example: admin belongs to clubA
+  if (user === "admin" && pass === "1234@admin") {
+
+    const tokenPayload = {
+      clientId: "clubA",   // <-- THIS IS WHERE YOU SET THE CLUB
+      user: "admin"
+    };
+
+    const token = btoa(JSON.stringify(tokenPayload));
+
+    localStorage.setItem("tairuzz_auth", token);
+    window.location.href = "/";
+  } else {
+    document.getElementById("error").style.display = "block";
+  }
+}
+
   </script>
 
 </body>
