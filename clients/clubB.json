@@ -1,0 +1,29 @@
+{
+  "clientName": "Club B Analytics",
+  "clientLogo": "/logos/clubB.png",
+  "accentColor": "#00aaff",
+  "tier": "basic",
+
+  "tabs": {
+    "leagueTable": true,
+    "profile": true,
+    "performanceRank": true,
+    "goalImpact": false,
+    "seasonOnSeasonPlayer": false,
+    "seasonOnSeasonClub": false,
+    "fixtureResultsByXG": false,
+    "teamResultsByXG": false,
+    "titleRace": false,
+    "fixturesAndResult": true,
+    "attackThreat": false,
+    "kpisPlot": false,
+    "performanceMetrics": false,
+    "teamFixturePerformance": false,
+    "comparePerformanceMetrics": false,
+    "goalPlacement": false,
+    "goalCategories": false,
+    "goalCategories2": false,
+    "goalAnalysis": false,
+    "goalFlow": false
+  }
+}
