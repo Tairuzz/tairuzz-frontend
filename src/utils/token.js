@@ -1,4 +1,4 @@
-function generateClientToken(clientId) {
+export function generateClientToken(clientId) {
   const payload = JSON.stringify({ clientId });
-  return btoa(payload); // base64 encode
+  return btoa(payload);
 }
