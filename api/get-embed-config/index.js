@@ -55,16 +55,16 @@ module.exports = async function (context, req) {
 
     context.log("📥 Incoming embed config request");
 
-    // SIMPLE AUTH CHECK
-    const auth = req.headers["x-tairuzz-auth"];
-    if (auth !== "true") {
-        context.log("⛔ Unauthorized request blocked");
-        context.res = {
-            status: 401,
-            body: { error: "Unauthorized" }
-        };
-        return;
-    }
+    // SIMPLE AUTH CHECK (Option B)
+const auth = req.headers["x-tairuzz-auth"];
+if (!auth) {
+    context.log("⛔ Unauthorized request blocked — missing auth header");
+    context.res = {
+        status: 401,
+        body: { error: "Unauthorized" }
+    };
+    return;
+}
 
     // WAKE CAPACITY ON ANY REQUEST
     wakeCapacity(context);
