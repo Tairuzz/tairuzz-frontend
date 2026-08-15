@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tairuzz Analytics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    /* LEFT NAV (reduced again) */
+    #sideNav {
+        width: 150px; /* reduced from 170px */
+        height: 100%;
+        background: #2a2a2a;
+        color: #e0e0e0;
+        border-right: 1px solid #3a3a3a;
+        padding: 6px 0; /* tighter */
+        box-sizing: border-box;
+        overflow-y: auto;
+    }
+
+    #sideNav button {
+        width: 100%;
+        padding: 10px 12px; /* tighter */
+        background: none;
+        border: none;
+        text-align: left;
+        color: #e0e0e0;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    #sideNav button:hover {
+        color: #ffcc00;
+    }
+
+    #sideNav button.activePage {
+        color: #3aa6ff;
+        background: #1f1f1f;
+        border-left: 3px solid #3aa6ff;
+    }
+
+    /* MAIN CONTENT (full height, no wasted space) */
+    #mainContent {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: calc(100% - 150px); /* updated */
+        margin: 0;
+        padding: 0;
+    }
+
+    /* HEADER (tighter) */
+    .header {
+        height: 44px; /* reduced */
+        background: #1f1f1f;
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 0 10px; /* tighter */
+        flex-shrink: 0;
+    }
+
+    .header img {
+        height: 26px; /* smaller */
+        margin-right: 8px;
+    }
+
+    .header-title {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    /* REPORT AREA (fills all remaining space) */
+    #embedContainer {
+        flex: 1;
+        width: 100%;
+        height: calc(100% - 44px); /* perfect fit */
+        position: relative;
+        margin: 0;
+        padding: 0;
+    }
+
+    #embedContainer iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+        border: none;
+    }
+
+    #loader {
+        padding: 20px;
+        font-size: 20px;
+        font-weight: 600;
+        display: none;
+    }
+</style>
+
+</head>
+
+<body>
+
+    <!-- AUTH CHECK -->
+    <script>
+        if (!localStorage.getItem("tairuzz_auth")) {
+            window.location.href = "/login.html";
+        }
+    </script>
+
+    <!-- LEFT NAV -->
+    <div id="sideNav">
+        <button data-page="League Table" data-key="League Table">League Table</button>
+        <button data-page="Profile" data-key="Profile">Profile</button>
+        <button data-page="Performance Rank" data-key="Performance Rank">Performance Rank</button>
+        <button data-page="Goal Impact" data-key="Goal Impact">Goal Impact</button>
+        <button data-page="Season on Season player" data-key="Season on Season player">Season on Season player</button>
+        <button data-page="Season on season club" data-key="Season on Season Club">Season on Season Club</button>
+        <button data-page="Fixture Results by xG" data-key="Fixture Results by xG">Fixture Results by xG</button>
+        <button data-page="Team Results by xG" data-key="Team Results by xG">Team Results by xG</button>
+        <button data-page="Title Race" data-key="Title Race">Title Race</button>
+        <button data-page="Fixtures and Result" data-key="Fixtures and Results">Fixtures and Result</button>
+        <button data-page="Attack Threat" data-key="Attack Threat">Attack Threat</button>
+        <button data-page="KPIs Plot" data-key="KPIs Plot">KPIs Plot</button>
+        <button data-page="Performance Metrics" data-key="Performance Metrics">Performance Metrics</button>
+        <button data-page="Team fixture Performance " data-key="Team Fixture Performance">Team Fixture Performance</button>
+        <button data-page="Compare Performance Metrics" data-key="Compare Performance Metrics">Compare Performance Metrics</button>
+        <button data-page="Goal Placement" data-key="Goal Placement">Goal Placement</button>
+        <button data-page="Goal Categories" data-key="Goal Categories">Goal Categories</button>
+        <button data-page="Goal Categories2" data-key="Goal Categories2">Goal Categories2</button>
+        <button data-page="Goal Analysis" data-key="Goal Analysis">Goal Analysis</button>
+        <button data-page="Goal Flow" data-key="Goal Flow">Goal Flow</button>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="mainContent">
+
+        <!-- HEADER -->
+        <div class="header">
+            <img src="club-logo.png" alt="Club Logo">
+            <div class="header-title">Club A Analytics</div>
+        </div>
+
+        <!-- REPORT -->
+        <div id="loader">Loading report…</div>
+        <div id="embedContainer"></div>
+
+    </div>
+
+    <!-- POWER BI -->
+    <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.22.0/dist/powerbi.min.js?v=999999"></script>
+    <script src="index.js"></script>
+
+    <!-- REACT ROOT -->
+    <div id="root"></div>
+
+</body>
+</html>
