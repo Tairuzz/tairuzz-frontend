@@ -2,62 +2,52 @@ import { useEffect, useState } from "react";
 import { fetchClientConfig } from "./api/clientConfig";
 import { fetchEmbedConfig } from "./api/embedConfig";
 
+import Header from "./components/Header";
+import SideNav from "./components/SideNav";
+import PowerBIEmbed from "./components/PowerBIEmbed";
+
 export default function App() {
-  // -----------------------------
-  // STATE
-  // -----------------------------
   const [clientConfig, setClientConfig] = useState(null);
   const [embedConfig, setEmbedConfig] = useState(null);
+  const [activePage, setActivePage] = useState(null);
 
-  // -----------------------------
-  // AUTH CHECK
-  // -----------------------------
   useEffect(() => {
     if (!localStorage.getItem("tairuzz_auth")) {
       window.location.href = "/login.html";
     }
   }, []);
 
-  // -----------------------------
-  // LOAD CLIENT CONFIG
-  // -----------------------------
   useEffect(() => {
-    fetchClientConfig()
-      .then(setClientConfig)
-      .catch(err => console.error("Client config error:", err));
+    fetchClientConfig().then((cfg) => {
+      setClientConfig(cfg);
+      setActivePage(cfg.defaultPage || null);
+    });
   }, []);
 
-  // -----------------------------
-  // LOAD EMBED CONFIG
-  // -----------------------------
   useEffect(() => {
-    fetchEmbedConfig()
-      .then(setEmbedConfig)
-      .catch(err => console.error("Embed config error:", err));
+    fetchEmbedConfig().then(setEmbedConfig);
   }, []);
 
-  // -----------------------------
-  // LOADING STATE
-  // -----------------------------
   if (!clientConfig || !embedConfig) {
     return <div>Loading…</div>;
   }
 
-  // -----------------------------
-  // TEMP UI (will be replaced)
-  // -----------------------------
   return (
-    <div>
-      <h1>{clientConfig.clientName}</h1>
-      <img
-        src={clientConfig.clientLogo}
-        alt={clientConfig.clientName}
-        style={{ height: "60px" }}
+    <div style={{ display: "flex", height: "100vh", width: "100vw" }}>
+      <SideNav
+        tabs={clientConfig.tabs}
+        activePage={activePage}
+        onPageChange={setActivePage}
       />
 
-      <pre style={{ marginTop: "20px" }}>
-        {JSON.stringify(embedConfig, null, 2)}
-      </pre>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        <Header
+          clientName={clientConfig.clientName}
+          clientLogo={clientConfig.clientLogo}
+        />
+
+        <PowerBIEmbed embedConfig={embedConfig} activePage={activePage} />
+      </div>
     </div>
   );
 }
