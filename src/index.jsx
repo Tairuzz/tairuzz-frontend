@@ -1,9 +1,26 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+import App from "./App.jsx";
+import Login from "./pages/Login.jsx";
+import ProtectedRoute from "./routes/ProtectedRoute.jsx";
+
+const root = createRoot(document.getElementById("root"));
+
+root.render(
+  <BrowserRouter>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <App />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route path="/login" element={<Login />} />
+    </Routes>
+  </BrowserRouter>
 );
