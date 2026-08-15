@@ -13,6 +13,11 @@ export default function App() {
   }, []);
 
   if (!config) return <div>Loading…</div>;
+const [embedConfig, setEmbedConfig] = useState(null);
+
+useEffect(() => {
+  fetchEmbedConfig().then(setEmbedConfig).catch(console.error);
+}, []);
 
   return (
     <div>
