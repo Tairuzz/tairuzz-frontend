@@ -1,23 +1,48 @@
 import { useEffect, useState } from "react";
 import { fetchClientConfig } from "./api/clientConfig";
+import { fetchEmbedConfig } from "./api/embedConfig";
+
+import Header from "./components/Header";
+import SideNav from "./components/SideNav";
+import PowerBIEmbed from "./components/PowerBIEmbed";
 
 export default function App() {
-  const [config, setConfig] = useState(null);
+  const [clientConfig, setClientConfig] = useState(null);
+  const [embedConfig, setEmbedConfig] = useState(null);
+  const [activePage, setActivePage] = useState(null);
+
 
   useEffect(() => {
-    async function load() {
-      const cfg = await fetchClientConfig("clubA");
-      setConfig(cfg);
-    }
-    load();
+    fetchClientConfig().then((cfg) => {
+      setClientConfig(cfg);
+      setActivePage(cfg.defaultPage || null);
+    });
   }, []);
 
-  if (!config) return <div>Loading…</div>;
+  useEffect(() => {
+    fetchEmbedConfig().then(setEmbedConfig);
+  }, []);
+
+  if (!clientConfig || !embedConfig) {
+    return <div>Loading…</div>;
+  }
 
   return (
-    <div>
-      <h1>{config.clientName}</h1>
-      <img src={config.clientLogo} alt={config.clientName} />
+    <div style={{ display: "flex", height: "100vh", width: "100vw" }}>
+      <SideNav
+        tabs={clientConfig.tabs}
+        activePage={activePage}
+        onPageChange={setActivePage}
+      />
+
+      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        <Header
+          clientName={clientConfig.clientName}
+          clientLogo={clientConfig.clientLogo}
+        />
+
+        <PowerBIEmbed embedConfig={embedConfig} activePage={activePage} />
+      </div>
     </div>
   );
 }
