@@ -19,56 +19,109 @@ export default function Login() {
       const data = await res.json();
 
       if (!data.success) {
-        setError("Invalid login");
+        setError("Invalid email or password");
         return;
       }
 
       localStorage.setItem("tairuzz_auth", data.token);
       window.location.href = "/";
     } catch (err) {
-      setError("Login failed");
+      setError("Login failed. Please try again.");
     }
   }
 
   return (
-    <div style={{ padding: "40px", fontFamily: "Arial" }}>
-      <h2>Login</h2>
-
-      <form onSubmit={handleLogin} style={{ maxWidth: "300px" }}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{ width: "100%", marginBottom: "10px", padding: "8px" }}
+    <div
+      style={{
+        height: "100vh",
+        width: "100vw",
+        background: "#0f0f0f",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontFamily: "Arial, sans-serif"
+      }}
+    >
+      <div
+        style={{
+          background: "#1f1f1f",
+          padding: "40px",
+          borderRadius: "8px",
+          width: "320px",
+          textAlign: "center",
+          boxShadow: "0 0 20px rgba(0,0,0,0.4)"
+        }}
+      >
+        {/* Logo */}
+        <img
+          src="/club-logo.png"
+          alt="Club Logo"
+          style={{ height: "60px", marginBottom: "20px" }}
         />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ width: "100%", marginBottom: "10px", padding: "8px" }}
-        />
+        {/* Title */}
+        <h2 style={{ color: "white", marginBottom: "20px" }}>
+          Tairuzz Analytics Login
+        </h2>
 
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            background: "#1f1f1f",
-            color: "white",
-            border: "none",
-            cursor: "pointer"
-          }}
-        >
-          Login
-        </button>
+        {/* Form */}
+        <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginBottom: "12px",
+              borderRadius: "4px",
+              border: "1px solid #333",
+              background: "#2a2a2a",
+              color: "white"
+            }}
+          />
 
-        {error && (
-          <div style={{ marginTop: "10px", color: "red" }}>{error}</div>
-        )}
-      </form>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginBottom: "12px",
+              borderRadius: "4px",
+              border: "1px solid #333",
+              background: "#2a2a2a",
+              color: "white"
+            }}
+          />
+
+          <button
+            type="submit"
+            style={{
+              width: "100%",
+              padding: "12px",
+              background: "#3aa6ff",
+              border: "none",
+              borderRadius: "4px",
+              color: "white",
+              fontWeight: "bold",
+              cursor: "pointer",
+              marginTop: "10px"
+            }}
+          >
+            Login
+          </button>
+
+          {error && (
+            <div style={{ marginTop: "12px", color: "#ff4444" }}>{error}</div>
+          )}
+        </form>
+      </div>
     </div>
   );
 }
