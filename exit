@@ -1,0 +1,24 @@
+[33mf06bbdb[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Modify Azure Static Web Apps workflow configuration
+[33mb497e55[m Add routing configuration for static web app
+[33m0e8cc7f[m Update package.json
+[33mc0c179b[m Initialize package.json for tairuzz-frontend project
+[33mc872e11[m Remove scripts section from package.json
+[33m935a3ac[m Delete embed.js
+[33m5296de9[m Delete embed-test.html
+[33m8af9746[m Delete intelligence-test.html
+[33m482ba44[m Update script source to use index.jsx as module
+[33me31dece[m Add Vite scripts to package.json
+[33mf2b8e11[m Add Vite configuration file for project setup
+[33m3a6b0eb[m Improve error messages in Login component
+[33m0bf57d0[m Remove authentication redirect in App component
+[33m227a6bf[m Implement routing with ProtectedRoute in index.jsx
+[33m0100d4f[m Add LogoutButton component for user logout
+[33m7c0615c[m Implement login form in Login.jsx
+[33mfec598d[m Add ProtectedRoute component for authentication
+[33m19a159c[m Refactor App component to include activePage state
+[33m4e0f5fd[m Add PowerBIEmbed component for embedding reports
+[33m2ebf7a0[m Add SideNav component for navigation tabs
+[33mae7c59a[m Add Header component with client logo and name
+[33m36d8f2f[m Refactor App component to handle client and embed configs
+[33m48e92d3[m Add embedConfig state and fetch logic
+[33mebc5584[m Add fetchEmbedConfig function to retrieve embed config
