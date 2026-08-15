@@ -11,11 +11,6 @@ export default function App() {
   const [embedConfig, setEmbedConfig] = useState(null);
   const [activePage, setActivePage] = useState(null);
 
-  useEffect(() => {
-    if (!localStorage.getItem("tairuzz_auth")) {
-      window.location.href = "/login.html";
-    }
-  }, []);
 
   useEffect(() => {
     fetchClientConfig().then((cfg) => {
