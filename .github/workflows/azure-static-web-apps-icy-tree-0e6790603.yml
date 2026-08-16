@@ -21,17 +21,15 @@ jobs:
           submodules: true
           lfs: false
 
-      # Install dependencies including devDependencies (Vite, React, etc.)
+      # Build the Vite app BEFORE deploying
       - name: Install dependencies
         run: npm install --include=dev
 
-      # Build the Vite app
       - name: Build app
         run: npm run build
 
-      # Deploy to Azure Static Web Apps
-      - name: Deploy
-        id: deploy
+      # Deploy the built app
+      - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_TREE_0E6790603 }}
