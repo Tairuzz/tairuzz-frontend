@@ -23,7 +23,7 @@ jobs:
 
       # Build the Vite app BEFORE deploying
       - name: Install dependencies
-        run: npm install --include=dev
+        run: npm ci
 
       - name: Fix node_modules permissions
         run: chmod +x node_modules/.bin/*
