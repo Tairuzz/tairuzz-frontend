@@ -53,11 +53,20 @@ export default function Login() {
         }}
       >
         {/* Logo */}
-        <img
-          src="/club-logo.png"
-          alt="Club Logo"
-          style={{ height: "60px", marginBottom: "20px" }}
-        />
+        <div
+          style={{
+            height: "60px",
+            marginBottom: "20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#3aa6ff",
+            fontWeight: "bold"
+          }}
+        >
+          Club Logo Pending
+        </div>
+
 
         {/* Title */}
         <h2 style={{ color: "white", marginBottom: "20px" }}>
