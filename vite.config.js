@@ -1,3 +1,4 @@
+// Trigger CI check
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
