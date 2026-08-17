@@ -11,13 +11,19 @@ export default function App() {
   const [embedConfig, setEmbedConfig] = useState(null);
   const [activePage, setActivePage] = useState(null);
 
-
   useEffect(() => {
-    fetchClientConfig().then((cfg) => {
-      setClientConfig(cfg);
-      setActivePage(cfg.defaultPage || null);
-    });
-  }, []);
+  const clientId = localStorage.getItem("tairuzz_client_id");
+
+  if (!clientId) {
+    console.error("No clientId found in localStorage");
+    return;
+  }
+
+  fetchClientConfig(clientId).then((cfg) => {
+    setClientConfig(cfg);
+    setActivePage(cfg.defaultPage || null);
+  }).catch(console.error);
+}, []);
 
   useEffect(() => {
     fetchEmbedConfig().then(setEmbedConfig);

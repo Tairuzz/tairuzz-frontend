@@ -27,6 +27,7 @@ export default function Login() {
       }
 
       localStorage.setItem("tairuzz_auth", data.token);
+      localStorage.setItem("tairuzz_client_id", data.clientId);
       window.location.href = "/";
     } catch (err) {
       setError("Login failed. Please try again.");

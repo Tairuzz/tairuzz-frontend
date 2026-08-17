@@ -10,7 +10,8 @@ export async function fetchClientConfig(clientId) {
       headers: {
         "Content-Type": "application/json",
         "x-tairuzz-auth": token
-      }
+      },
+      body: JSON.stringify({ clientId })
     }
   );
 
