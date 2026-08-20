@@ -12,7 +12,7 @@ export default function App() {
   const [activePage, setActivePage] = useState(null);
 
   useEffect(() => {
-  const clientId = localStorage.getItem("tairuzz_client_id");
+  const clientId = localStorage.getItem("clientId");
 
   if (!clientId) {
     console.error("No clientId found in localStorage");

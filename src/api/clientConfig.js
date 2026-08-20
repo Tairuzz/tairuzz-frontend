@@ -1,7 +1,5 @@
-import { generateClientToken } from "../utils/token";
-
 export async function fetchClientConfig(clientId) {
-  const token = generateClientToken(clientId);
+  const token = localStorage.getItem("tairuzz_auth");
 
   const response = await fetch(
     "https://tairuzz-backend-e2gjewe6f2fpewg8.ukwest-01.azurewebsites.net/api/get-client-config",
@@ -9,7 +7,7 @@ export async function fetchClientConfig(clientId) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-tairuzz-auth": token
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify({ clientId })
     }
