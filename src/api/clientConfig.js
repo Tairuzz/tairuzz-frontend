@@ -1,17 +1,18 @@
 export async function fetchClientConfig(clientId) {
-  // Ensure clientId always exists
-  if (!clientId) {
-    clientId = localStorage.getItem("clientId");
-    if (!clientId) {
-      clientId = crypto.randomUUID();
-      localStorage.setItem("clientId", clientId);
-    }
+  // Always read the real clientId from login flow
+  const storedClientId = localStorage.getItem("tairuzz_client_id");
+
+  if (!storedClientId) {
+    console.error("No clientId found — user is not logged in");
+    return {}; // Prevent crash
   }
+
+  clientId = storedClientId;
 
   // Get auth token
   const token = localStorage.getItem("tairuzz_auth");
   if (!token) {
-    console.error("No auth token found in localStorage");
+    console.error("No auth token found — user is not logged in");
     return {}; // Prevent crash
   }
 
@@ -22,7 +23,7 @@ export async function fetchClientConfig(clientId) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-tairuzz-auth": token   // ✔ correct header
+          "Authorization": `Bearer ${token}`   // ✔ correct header
         },
         body: JSON.stringify({ clientId })
       }
