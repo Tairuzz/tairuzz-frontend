@@ -12,21 +12,32 @@ export default function App() {
   const [activePage, setActivePage] = useState(null);
 
   useEffect(() => {
-  const clientId = localStorage.getItem("clientId");
+    // Read the correct key (aligned with Login.jsx and ProtectedRoute)
+    const clientId = localStorage.getItem("tairuzz_client_id");
 
-  if (!clientId) {
-    console.error("No clientId found in localStorage");
-    return;
-  }
+    if (!clientId) {
+      console.error("App.jsx: No clientId found — user is not logged in");
+      return;
+    }
 
-  fetchClientConfig(clientId).then((cfg) => {
-    setClientConfig(cfg);
-    setActivePage(cfg.defaultPage || null);
-  }).catch(console.error);
-}, []);
+    fetchClientConfig(clientId)
+      .then((cfg) => {
+        setClientConfig(cfg);
+        setActivePage(cfg.defaultPage || null);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch client config:", err);
+        setClientConfig({}); // Prevent crash
+      });
+  }, []);
 
   useEffect(() => {
-    fetchEmbedConfig().then(setEmbedConfig);
+    fetchEmbedConfig()
+      .then(setEmbedConfig)
+      .catch((err) => {
+        console.error("Failed to fetch embed config:", err);
+        setEmbedConfig({}); // Prevent crash
+      });
   }, []);
 
   if (!clientConfig || !embedConfig) {
