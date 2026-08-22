@@ -1,4 +1,5 @@
-export default function SideNav({ tabs, activePage, onPageChange }) {
+export default function SideNav({ tabs = {}, activePage, onPageChange }) {
+  // Prevent crash if tabs is undefined or null
   const visibleTabs = Object.entries(tabs)
     .filter(([key, value]) => value !== false)
     .map(([key]) => key);
