@@ -52,7 +52,7 @@ export default function App() {
     if (clientConfig?.accentColor) {
       console.log("Accent color loaded:", clientConfig.accentColor);
 
-      document.documentElement.style.setProperty(
+      document.body.style.setProperty(
         "--accent-color",
         clientConfig.accentColor
       );
