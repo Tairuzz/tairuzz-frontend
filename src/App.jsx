@@ -74,20 +74,19 @@ export default function App() {
   return (
     <div style={{ display: "flex", height: "100vh", width: "100vw" }}>
       <SideNav
-        tabs={clientConfig.tabs}
-        activePage={activePage}
-        onPageChange={setActivePage}
-        clientConfig={clientConfig}
-      />
-
-      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        <Header
-          clientName={clientConfig.clientName}
-          clientLogo={clientConfig.clientLogo}
-        />
-
-        <PowerBIEmbed embedConfig={embedConfig} activePage={activePage} />
-      </div>
+  tabs={clientConfig.tabs}
+  sidebarColor={clientConfig.sidebarColor}
+  activePage={activePage}
+  onPageChange={setActivePage}
+/>
+<div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+  <Header
+    clientName={clientConfig.clientName}
+    clientLogo={clientConfig.clientLogo}
+    accentColor={clientConfig.accentColor}
+  />
+  <PowerBIEmbed embedConfig={embedConfig} activePage={activePage} />
+    </div>
     </div>
   );
 }
