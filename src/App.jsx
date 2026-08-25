@@ -56,7 +56,7 @@ export default function App() {
         "--accent-color",
         clientConfig.accentColor
       );
-      console.log("CSS variable now:", getComputedStyle(document.documentElement).getPropertyValue("--accent-color"));
+      console.log("Loaded accentColor:", clientConfig?.accentColor);
 
     }
   }, [clientConfig]);
