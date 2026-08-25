@@ -9,7 +9,7 @@ export default function SideNav({ tabs = {}, activePage, onPageChange }) {
       style={{
         width: "150px",
         height: "100%",
-        background: "#2a2a2a",
+        background: "#3a3a3a",
         color: "#e0e0e0",
         borderRight: "1px solid #3a3a3a",
         padding: "6px 0",
