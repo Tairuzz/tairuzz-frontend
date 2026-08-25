@@ -77,6 +77,7 @@ export default function App() {
         tabs={clientConfig.tabs}
         activePage={activePage}
         onPageChange={setActivePage}
+        clientConfig={clientConfig}
       />
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
