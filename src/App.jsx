@@ -76,6 +76,9 @@ export default function App() {
       <SideNav
   tabs={clientConfig.tabs}
   sidebarColor={clientConfig.sidebarColor}
+  sidebarTextColor={clientConfig.sidebarTextColor}
+  activeTabBackground={clientConfig.activeTabBackground}
+  activeTabTextColor={clientConfig.activeTabTextColor}
   activePage={activePage}
   onPageChange={setActivePage}
 />
