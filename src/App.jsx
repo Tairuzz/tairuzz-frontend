@@ -83,7 +83,7 @@ export default function App() {
         onPageChange={setActivePage}
       />
       
-<div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+<div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100%" }}>
   <Header
     clientName={clientConfig.clientName}
     clientLogo={clientConfig.clientLogo}
