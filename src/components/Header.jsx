@@ -1,9 +1,9 @@
-export default function Header({ clientName, clientLogo }) {
+export default function Header({ clientName, clientLogo, accentColor }) {
   return (
     <div
       style={{
         height: "44px",
-        background: "#1f1f1f",
+        background: accentColor || "#1f1f1f",
         color: "white",
         display: "flex",
         alignItems: "center",
