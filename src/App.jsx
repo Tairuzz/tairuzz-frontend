@@ -72,7 +72,7 @@ export default function App() {
   // MAIN LAYOUT
   // -----------------------------
   return (
-    <div style={{ display: "flex", height: "100vh", width: "100vw" }}>
+    <div style={{ display: "flex", height: "100%", width: "100%" }}>
         <SideNav
         tabs={clientConfig.tabs}
         sidebarColor={clientConfig.sidebarColor}
