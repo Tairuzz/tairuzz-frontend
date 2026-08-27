@@ -73,8 +73,7 @@ export default function App() {
   // -----------------------------
   return (
     <div style={{ display: "flex", height: "100vh", width: "100vw" }}>
-  {/* Temporarily disabled to test if SideNav's width affects Power BI FitToPage whitespace
-      <SideNav
+        <SideNav
         tabs={clientConfig.tabs}
         sidebarColor={clientConfig.sidebarColor}
         sidebarTextColor={clientConfig.sidebarTextColor}
@@ -83,7 +82,7 @@ export default function App() {
         activePage={activePage}
         onPageChange={setActivePage}
       />
-      */}
+      
 <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
   <Header
     clientName={clientConfig.clientName}
