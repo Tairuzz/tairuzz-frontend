@@ -43,7 +43,8 @@ export default function PowerBIEmbed({ embedConfig, activePage }) {
         flex: 1,
         width: "100%",
         height: "100%",
-        position: "relative"
+        position: "relative",
+        overflow: "hidden"
       }}
     />
   );
