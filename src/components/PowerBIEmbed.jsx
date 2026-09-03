@@ -1,7 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 export default function PowerBIEmbed({ embedConfig, activePage }) {
   const containerRef = useRef(null);
   const reportRef = useRef(null);
+  const [customError, setCustomError] = useState(null);
+
   useEffect(() => {
     if (!containerRef.current || !embedConfig) return;
     const powerbi = window.powerbi;
@@ -20,15 +22,27 @@ export default function PowerBIEmbed({ embedConfig, activePage }) {
         layoutType: models.LayoutType.Custom,
         customLayout: {
           displayOption: models.DisplayOption.FitToPage
-        }
+        },
+        hideErrors: true
       }
     };
     const report = powerbi.embed(containerRef.current, config);
     reportRef.current = report;
+
+    report.off("error");
+    report.on("error", (event) => {
+      const error = event.detail;
+      console.error("Power BI embed error:", error);
+      setCustomError(
+        "Your dashboard is warming up — this usually takes under a minute. Please refresh shortly."
+      );
+    });
+
     return () => {
       powerbi.reset(containerRef.current);
     };
   }, [embedConfig]);
+
   useEffect(() => {
     if (!reportRef.current || !activePage) return;
     reportRef.current.getPages().then((pages) => {
@@ -36,6 +50,7 @@ export default function PowerBIEmbed({ embedConfig, activePage }) {
       if (target) target.setActive();
     });
   }, [activePage]);
+
   return (
     <div
       ref={containerRef}
@@ -46,6 +61,25 @@ export default function PowerBIEmbed({ embedConfig, activePage }) {
         position: "relative",
         overflow: "hidden"
       }}
-    />
+    >
+      {customError && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(255,255,255,0.95)",
+            padding: "24px",
+            textAlign: "center",
+            fontSize: "15px",
+            color: "#333"
+          }}
+        >
+          {customError}
+        </div>
+      )}
+    </div>
   );
 }
