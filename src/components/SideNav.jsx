@@ -14,7 +14,7 @@ export default function SideNav({
   return (
     <div
       style={{
-        width: "150px",
+        width: "110px",
         height: "100%",
         background: sidebarColor || "#3a3a3a",
         color: sidebarTextColor,
@@ -31,7 +31,7 @@ export default function SideNav({
             onClick={() => onPageChange(tab)}
             style={{
               width: "100%",
-              padding: "10px 12px",
+              padding: "10px 6px",
               background: isActive ? activeTabBackground : "none",
               border: "none",
               textAlign: "left",
@@ -40,7 +40,7 @@ export default function SideNav({
                 ? `3px solid ${activeTabBackground}`
                 : "3px solid transparent",
               cursor: "pointer",
-              fontSize: "13px"
+              fontSize: "12px"
             }}
           >
             {tab}

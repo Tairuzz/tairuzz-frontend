@@ -72,17 +72,18 @@ export default function App() {
   // MAIN LAYOUT
   // -----------------------------
   return (
-    <div style={{ display: "flex", height: "100vh", width: "100vw" }}>
-      <SideNav
-  tabs={clientConfig.tabs}
-  sidebarColor={clientConfig.sidebarColor}
-  sidebarTextColor={clientConfig.sidebarTextColor}
-  activeTabBackground={clientConfig.activeTabBackground}
-  activeTabTextColor={clientConfig.activeTabTextColor}
-  activePage={activePage}
-  onPageChange={setActivePage}
-/>
-<div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+    <div style={{ display: "flex", height: "100%", width: "100%" }}>
+        <SideNav
+        tabs={clientConfig.tabs}
+        sidebarColor={clientConfig.sidebarColor}
+        sidebarTextColor={clientConfig.sidebarTextColor}
+        activeTabBackground={clientConfig.activeTabBackground}
+        activeTabTextColor={clientConfig.activeTabTextColor}
+        activePage={activePage}
+        onPageChange={setActivePage}
+      />
+      
+<div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100%" }}>
   <Header
     clientName={clientConfig.clientName}
     clientLogo={clientConfig.clientLogo}

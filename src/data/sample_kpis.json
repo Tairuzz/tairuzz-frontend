@@ -1,0 +1,12 @@
+[
+  { "player": "Erling Haaland", "goals": 27, "assists": 4, "xG": 26.46, "passesCompleted": 210 },
+  { "player": "Bruno Fernandes", "goals": 6, "assists": 9, "xG": 5.80, "passesCompleted": 1240 },
+  { "player": "Phil Foden", "goals": 9, "assists": 6, "xG": 8.10, "passesCompleted": 980 },
+  { "player": "Mohamed Salah", "goals": 15, "assists": 8, "xG": 13.20, "passesCompleted": 870 },
+  { "player": "Cole Palmer", "goals": 11, "assists": 5, "xG": 9.90, "passesCompleted": 760 },
+  { "player": "Bukayo Saka", "goals": 10, "assists": 7, "xG": 9.40, "passesCompleted": 820 },
+  { "player": "Antoine Semenyo", "goals": 17, "assists": 3, "xG": 17.26, "passesCompleted": 540 },
+  { "player": "Igor Thiago", "goals": 22, "assists": 2, "xG": 20.19, "passesCompleted": 410 },
+  { "player": "Morgan Gibbs-White", "goals": 5, "assists": 9, "xG": 5.20, "passesCompleted": 690 },
+  { "player": "Enzo Fernández", "goals": 3, "assists": 6, "xG": 3.10, "passesCompleted": 1420 }
+]
