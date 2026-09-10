@@ -44,13 +44,18 @@ export default function PowerBIEmbed({ embedConfig, activePage }) {
   }, [embedConfig]);
 
   useEffect(() => {
-    if (!reportRef.current || !activePage) return;
-    reportRef.current.getPages().then((pages) => {
-      const target = pages.find((p) => p.displayName === activePage);
-      if (target) target.setActive();
-    });
-  }, [activePage]);
-
+  if (!reportRef.current || !activePage) return;
+  reportRef.current.getPages().then((pages) => {
+    const normalize = (s) => s.trim().toLowerCase();
+    const target = pages.find((p) => normalize(p.displayName) === normalize(activePage));
+    if (target) {
+      target.setActive();
+    } else {
+      console.warn(`No report page found matching "${activePage}"`);
+    }
+  });
+}, [activePage]);
+  
   return (
     <div
       ref={containerRef}
