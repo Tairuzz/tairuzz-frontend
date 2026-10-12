@@ -43,15 +43,20 @@ export default function PowerBIEmbed({ embedConfig, activePage }) {
     };
   }, [embedConfig]);
 
-  useEffect(() => {
+ useEffect(() => {
   if (!reportRef.current || !activePage) return;
+
+  // Ignore case, leading/trailing spaces, and repeated spaces
+  const normalize = (s) => (s || "").trim().replace(/\s+/g, " ").toLowerCase();
+
   reportRef.current.getPages().then((pages) => {
-    const normalize = (s) => s.trim().toLowerCase();
-    const target = pages.find((p) => normalize(p.displayName) === normalize(activePage));
+    const target = pages.find(
+      (p) => normalize(p.displayName) === normalize(activePage)
+    );
     if (target) {
       target.setActive();
     } else {
-      console.warn(`No report page found matching "${activePage}"`);
+      console.warn(`No report page matches tab "${activePage}"`);
     }
   });
 }, [activePage]);
