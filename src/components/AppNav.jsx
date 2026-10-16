@@ -18,7 +18,8 @@ export const NAV_SECTIONS = [
     items: [
       { id: "match-xg", label: "Match story (xG)", type: "embedded", pageName: "Fixture Results by XG" },
       { id: "fixtures", label: "Fixtures and results", type: "embedded", pageName: "Fixtures And Result" },
-      { id: "team-fixture", label: "Team fixture performance", type: "embedded", pageName: "Team Fixture Performance" }
+      { id: "team-fixture", label: "Team fixture performance", type: "embedded", pageName: "Team Fixture Performance" },
+      { id: "goal-buildup", label: "Goal buildup", type: "embedded", pageName: "Goal Buildup" }
     ]
   },
   {
@@ -29,7 +30,8 @@ export const NAV_SECTIONS = [
       { id: "perf-rank", label: "Performance rank", type: "embedded", pageName: "Performance Rank" },
       { id: "perf-metrics", label: "Performance metrics", type: "embedded", pageName: "Performance Metrics" },
       { id: "compare", label: "Compare players", type: "embedded", pageName: "Compare Performance Metrics" },
-      { id: "sos-player", label: "Season on season (player)", type: "embedded", pageName: "Season On Season Player" }
+      { id: "sos-player", label: "Season on season (player)", type: "embedded", pageName: "Season On Season Player" },
+      { id: "heatmap", label: "Heatmap", type: "embedded", pageName: "Heatmap" }
     ]
   },
   {
@@ -42,7 +44,8 @@ export const NAV_SECTIONS = [
       { id: "goal-categories", label: "Goal categories (logos)", type: "embedded", pageName: "Goal Categories" },
       { id: "goal-categories-2", label: "Goal categories (scatter)", type: "embedded", pageName: "Goal Categories2" },
       { id: "goal-analysis", label: "Goal analysis", type: "embedded", pageName: "Goal Analysis" },
-      { id: "goal-flow", label: "Goal flow", type: "embedded", pageName: "Goal Flow" }
+      { id: "goal-flow", label: "Goal flow", type: "embedded", pageName: "Goal Flow" },
+      { id: "goal-matrix", label: "Goal matrix", type: "embedded", pageName: "Goal Matrix" }
     ]
   }
 ];
